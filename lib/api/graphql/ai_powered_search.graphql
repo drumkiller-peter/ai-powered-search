@@ -1,0 +1,56 @@
+query AIPoweredSearch(
+  $query: String!
+  $type: String!
+  $language: String
+  $queryType: EGWQueryTypeEnum
+  $orderBy: SortOrderEnum
+) {
+  search(
+    query: $query
+    type: $type
+    language: $language
+    queryType: $queryType
+    orderBy: $orderBy
+  ) {
+    totalCount
+    info {
+      hasNextPage
+      hasPreviousPage
+    }
+    items {
+      weight
+      answer
+      snippet
+      paraId
+      publication {
+        id
+        title
+        code
+        languageCode
+        isAudioBook
+        folderId
+        permission
+      }
+      paragraph {
+        refCodes {
+          short
+        }
+        content
+        metadata {
+          date
+          paraId
+          bibleReference {
+            book
+            chapter
+            verses
+          }
+          manuscript {
+            addressee
+            place
+            title
+          }
+        }
+      }
+    }
+  }
+}

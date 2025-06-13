@@ -1,0 +1,146 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+
+import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.data.gql.dart'
+    show
+        GAIPoweredSearchData,
+        GAIPoweredSearchData_search,
+        GAIPoweredSearchData_search_info,
+        GAIPoweredSearchData_search_items,
+        GAIPoweredSearchData_search_items_paragraph,
+        GAIPoweredSearchData_search_items_paragraph_metadata,
+        GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference,
+        GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
+        GAIPoweredSearchData_search_items_paragraph_refCodes,
+        GAIPoweredSearchData_search_items_publication;
+import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.req.gql.dart'
+    show GAIPoweredSearchReq;
+import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.var.gql.dart'
+    show GAIPoweredSearchVars;
+import 'package:ai_powered_search/api/graphql/__generated__/schema.schema.gql.dart'
+    show
+        GAny,
+        GApplyPolicy,
+        GBooleanOperationFilterInput,
+        GChatMessageDtoFilterInput,
+        GChatMessageType,
+        GChatMessageTypeOperationFilterInput,
+        GDateTime,
+        GDateTimeOperationFilterInput,
+        GDeleteQueryInput,
+        GEGWQueryTypeEnum,
+        GFacetTypeEnum,
+        GFloatOperationFilterInput,
+        GGenerateReplyToUserMessageInput,
+        GIntOperationFilterInput,
+        GIntOperationalFilterInput,
+        GIntersectionFilterOfInt32Input,
+        GIntersectionFilterOfParaIdInput,
+        GIntersectionFilterOfPublicationTypeInput,
+        GIntersectionFilterOfWemlFolderTypeEnumInput,
+        GKeywordSearchResultDtoFilterInput,
+        GLtMsTypeEnum,
+        GNullableOfVoteTypeEnumOperationFilterInput,
+        GPostReplyToChatInput,
+        GPublicationDtoFilterInput,
+        GPublicationType,
+        GPublicationTypeOperationFilterInput,
+        GRatingDtoFilterInput,
+        GSearchFilterRequestInput,
+        GSearchInput,
+        GSearchInputBibleFilterInput,
+        GSearchInputDateFilterInput,
+        GSearchInputFilterInput,
+        GSearchInputManuscriptsFilterInput,
+        GSearchInputPaginationFilterInput,
+        GSearchTypeEnum,
+        GSemanticSearchResultDtoFilterInput,
+        GSortOrderEnum,
+        GStringOperationFilterInput,
+        GStringOperationalFilterInput,
+        GURL,
+        GUUID,
+        GUrlOperationFilterInput,
+        GUuidOperationFilterInput,
+        GVoteForChatMessageInput,
+        GVoteForSearchResultInput,
+        GVoteTypeEnum,
+        GWemlFolderType,
+        GWemlPublicationPermission,
+        GWemlPublicationPermissionOperationFilterInput;
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
+import 'package:built_value/standard_json_plugin.dart' show StandardJsonPlugin;
+import 'package:ferry_exec/ferry_exec.dart';
+import 'package:gql_code_builder_serializers/gql_code_builder_serializers.dart'
+    show OperationSerializer;
+
+part 'serializers.gql.g.dart';
+
+final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
+  ..add(OperationSerializer())
+  ..addPlugin(StandardJsonPlugin());
+@SerializersFor([
+  GAIPoweredSearchData,
+  GAIPoweredSearchData_search,
+  GAIPoweredSearchData_search_info,
+  GAIPoweredSearchData_search_items,
+  GAIPoweredSearchData_search_items_paragraph,
+  GAIPoweredSearchData_search_items_paragraph_metadata,
+  GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference,
+  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
+  GAIPoweredSearchData_search_items_paragraph_refCodes,
+  GAIPoweredSearchData_search_items_publication,
+  GAIPoweredSearchReq,
+  GAIPoweredSearchVars,
+  GAny,
+  GApplyPolicy,
+  GBooleanOperationFilterInput,
+  GChatMessageDtoFilterInput,
+  GChatMessageType,
+  GChatMessageTypeOperationFilterInput,
+  GDateTime,
+  GDateTimeOperationFilterInput,
+  GDeleteQueryInput,
+  GEGWQueryTypeEnum,
+  GFacetTypeEnum,
+  GFloatOperationFilterInput,
+  GGenerateReplyToUserMessageInput,
+  GIntOperationFilterInput,
+  GIntOperationalFilterInput,
+  GIntersectionFilterOfInt32Input,
+  GIntersectionFilterOfParaIdInput,
+  GIntersectionFilterOfPublicationTypeInput,
+  GIntersectionFilterOfWemlFolderTypeEnumInput,
+  GKeywordSearchResultDtoFilterInput,
+  GLtMsTypeEnum,
+  GNullableOfVoteTypeEnumOperationFilterInput,
+  GPostReplyToChatInput,
+  GPublicationDtoFilterInput,
+  GPublicationType,
+  GPublicationTypeOperationFilterInput,
+  GRatingDtoFilterInput,
+  GSearchFilterRequestInput,
+  GSearchInput,
+  GSearchInputBibleFilterInput,
+  GSearchInputDateFilterInput,
+  GSearchInputFilterInput,
+  GSearchInputManuscriptsFilterInput,
+  GSearchInputPaginationFilterInput,
+  GSearchTypeEnum,
+  GSemanticSearchResultDtoFilterInput,
+  GSortOrderEnum,
+  GStringOperationFilterInput,
+  GStringOperationalFilterInput,
+  GURL,
+  GUUID,
+  GUrlOperationFilterInput,
+  GUuidOperationFilterInput,
+  GVoteForChatMessageInput,
+  GVoteForSearchResultInput,
+  GVoteTypeEnum,
+  GWemlFolderType,
+  GWemlPublicationPermission,
+  GWemlPublicationPermissionOperationFilterInput,
+])
+final Serializers serializers = _serializersBuilder.build();

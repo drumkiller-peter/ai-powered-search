@@ -1,0 +1,1223 @@
+schema {
+  query: Query
+  mutation: Mutations
+}
+
+"""
+The `@stream` directive may be provided for a field of `List` type so that the backend can leverage technology such as asynchronous iterators to provide a partial list in the initial response, and additional list items in subsequent responses. `@include` and `@skip` take precedence over `@stream`.
+"""
+directive @stream(
+  """
+  If this argument label has a value other than null, it will be passed on to the result of this stream directive. This label is intended to give client applications a way to identify to which fragment a streamed result belongs to.
+  """
+  label: String
+
+  """
+  The initial elements that shall be send down to the consumer.
+  """
+  initialCount: Int! = 0
+
+  """
+  Streamed when true.
+  """
+  if: Boolean
+) on FIELD
+
+type MatchedDataResult {
+  data: Any
+  matchPercent: Int!
+  relatedContext: RelatedContext!
+  answer: String!
+}
+
+type UnifiedSearchResultDto {
+  score: Float
+  answer: String
+  fullText: String
+  snippet: String
+  uri: String
+  reference: String
+  referenceCode: String
+  order: Int
+  relatedContext: RelatedContext
+}
+
+type RelatedContext {
+  publications: [Any]
+  authors: [Any]
+  languages: [Any]
+}
+
+type SearchResults {
+  totalCount: Int
+  languageFacets: [KeyValuePairOfStringAndInt32!]
+  items: [SearchHitDto!]!
+  info: SearchSegmentInfo
+  facet(
+    language: String!
+    type: FacetTypeEnum!
+    filter: SearchInputFilterInput
+  ): [FacetDto]
+}
+
+union FacetDto = PublicationFacet | FolderFacet
+
+type PublicationFacet {
+  publication: Publication!
+
+  """
+  Number of matches in this publication
+  """
+  count: Int!
+}
+
+type FolderFacet {
+  folder: Folder
+  count: Int!
+}
+
+type Publication {
+  id: Int!
+  type: String
+  languageCode: String
+  language: Language
+  author: Author
+  code: String
+  title: String
+  alternateTitle: String
+  description: String
+  authorId: Int
+  originalPublicationId: Int
+  publicationYear: Int
+  publisher: String
+  isbn: String
+  purchaseLink: String
+  pageCount: Int
+  actualPageCount: Int
+  permission: String
+  folderId: Int
+  order: Int
+  globalOrder: Int
+  updatedAt: DateTime
+  isAudioBook: Boolean
+  isEgwCollection: Boolean
+  firstParagraph: String
+}
+
+input SearchInputFilterInput {
+  """
+  If true, filter to only EGW writings collection.
+  """
+  egwWritingsCollection: Boolean
+
+  """
+  Filter by specific publication IDs.
+  """
+  publications: IntersectionFilterOfInt32Input
+
+  """
+  Filter by specific folder IDs.
+  """
+  folders: IntersectionFilterOfInt32Input
+
+  """
+  Filter by specific chapter (para) IDs.
+  """
+  chapters: IntersectionFilterOfParaIdInput
+
+  """
+  Filter by WEML folder types.
+  """
+  folderTypes: IntersectionFilterOfWemlFolderTypeEnumInput
+
+  """
+  Filter by publication types.
+  """
+  publicationTypes: IntersectionFilterOfPublicationTypeInput
+
+  """
+  If true, search only in headings.
+  """
+  headingsOnly: Boolean!
+}
+
+scalar Any
+
+enum FacetTypeEnum {
+  PUBLICATION
+  FOLDER
+  TOPIC
+}
+
+type Folder {
+  id: Int!
+  parentId: Int
+  order: Int!
+  globalOrder: Int!
+  title: String!
+  type: WemlFolderType!
+  path: String!
+  publicationCount: Int!
+  childFolderCount: Int!
+
+  """
+  Parent folder
+  """
+  parent: Folder
+
+  """
+  Child folders
+  """
+  children(deep: Boolean): [Folder!]!
+  publications(filter: PublicationDtoFilterInput): [Publication!]!
+}
+
+type Language {
+  code: String!
+  name: String!
+  title: String!
+  direction: String!
+}
+
+type Author {
+  id: Int!
+  firstName: String
+  middleName: String
+  lastName: String
+  code: String
+  biography: String
+}
+
+"""
+The `DateTime` scalar represents an ISO-8601 compliant date time type.
+"""
+scalar DateTime @specifiedBy(url: "https://www.graphql-scalars.com/date-time")
+
+input IntersectionFilterOfInt32Input {
+  """
+  All items must match these IDs.
+  """
+  include: [Int]
+
+  """
+  At least one item must match these IDs.
+  """
+  exclude: [Int]
+}
+
+input IntersectionFilterOfParaIdInput {
+  """
+  All items must match these Para IDs.
+  """
+  all: [String]
+
+  """
+  At least one item must match these Para IDs.
+  """
+  any: [String]
+}
+
+input IntersectionFilterOfWemlFolderTypeEnumInput {
+  """
+  All items must match these folder types.
+  """
+  include: [WemlFolderType]
+
+  """
+  At least one item must match these folder types.
+  """
+  exclude: [WemlFolderType]
+}
+
+input IntersectionFilterOfPublicationTypeInput {
+  """
+  All items must match these publication types.
+  """
+  include: [PublicationType]
+
+  """
+  At least one item must match these publication types.
+  """
+  exclude: [PublicationType]
+}
+
+enum ApplyPolicy {
+  BEFORE_RESOLVER
+  AFTER_RESOLVER
+  VALIDATION
+}
+
+enum WemlFolderType {
+  ROOT
+  BOOKS
+  EGW_WRITINGS
+  BIOGRAPHY
+  DEVOTIONALS
+  PERIODICALS
+  REFERENCE
+  BIBLE
+  BIBLE_CONCORDANCES
+  BIBLE_COMMENTARIES
+  SCRIPTURE_INDICES
+  BIBLE_DICTIONARIES
+  BIBLE_VERSIONS
+  MISC_COLLECTIONS
+  PAMPHLETS
+  MANUSCRIPTRELEASES
+  LETTERS_MANUSCRIPTS
+  RESEARCH_DOCUMENTS
+  REFERENCE_WORKS
+  RECENT_AUTHORS
+  MODERN_ENGLISH
+  MISC_TITLES
+  DICTIONARIES
+  TOPICAL_INDEXES
+  CHILDRENSTORIES
+  STUDY_GUIDES
+  ADVENTIST_BELIEFS
+  ADVENTIST_PIONEER_LIBRARY
+}
+
+enum PublicationType {
+  BOOK
+  DEVOTIONAL
+  BIBLE_COMMENTARY
+  BIBLE
+  PERIODICAL_PAGE_BREAK
+  PERIODICAL_NO_PAGE_BREAK
+  MANUSCRIPT
+  DICTIONARY
+  TOPICAL_INDEX
+  SCRIPTURE_INDEX
+}
+
+"""
+GraphQl queries
+"""
+type Query {
+  """
+  Get list of folders
+  """
+  folders: [FolderDto!]!
+
+  """
+  Get list of queries
+  """
+  queries(
+    skip: Int
+    take: Int
+
+    """
+    Search query
+    """
+    search: String
+  ): QueriesCollectionSegment
+
+  """
+  Get single query by id
+  """
+  query(
+    """
+    Query ID
+    """
+    id: UUID!
+  ): HistoryEntry
+
+  """
+  Executes a search query against the external GraphQL API
+
+
+  **Returns:**
+  Search result object
+  """
+  search(
+    """
+    Search term
+    """
+    query: String!
+
+    """
+    Search Type
+    """
+    type: String
+
+    """
+    Language code
+    """
+    language: String
+
+    """
+    Filter Queries
+    """
+    filter: SearchInputFilterInput
+    orderBy: SortOrderEnum
+    bibleFilter: SearchInputBibleFilterInput
+    dateFilter: SearchInputDateFilterInput
+    manuscriptsFilter: SearchInputManuscriptsFilterInput
+    paginationFilter: SearchInputPaginationFilterInput
+    queryType: EGWQueryTypeEnum
+  ): SearchResults!
+}
+
+"""
+Mutations
+"""
+type Mutations {
+  """
+  Perform search
+  """
+  search(input: SearchInput!): SearchPayload!
+
+  """
+  Vote for chat message
+  """
+  voteForChatMessage(
+    """
+    Input object
+    """
+    input: VoteForChatMessageInput!
+  ): VoteForChatMessagePayload!
+
+  """
+  Vote for search result
+  """
+  voteForSearchResult(
+    """
+    Input object
+    """
+    input: VoteForSearchResultInput!
+  ): VoteForSearchResultPayload!
+
+  """
+  Delete query
+  """
+  deleteQuery(input: DeleteQueryInput!): DeleteQueryPayload!
+
+  """
+  Clear user history
+  """
+  clearHistory: ClearHistoryPayload!
+
+  """
+  Post reply to chat. If userMessageId points to an existing message, its content is updated and messages below are deleted
+  """
+  postReplyToChat(
+    """
+    Input object
+    """
+    input: PostReplyToChatInput!
+  ): PostReplyToChatPayload!
+
+  """
+  Post reply to user message
+  """
+  generateReplyToUserMessage(
+    """
+    Input object
+    """
+    input: GenerateReplyToUserMessageInput!
+  ): GenerateReplyToUserMessagePayload!
+}
+
+"""
+Keyword history entry DTO
+"""
+type KeywordHistoryEntryDto {
+  """
+  List of search results
+  """
+  searchResults(
+    where: KeywordSearchResultDtoFilterInput
+  ): [KeywordSearchResultDto!]!
+
+  """
+  Keyword history entry identifier
+  """
+  id: UUID!
+
+  """
+  Query text
+  """
+  query: String!
+
+  """
+  Folder IDs
+  """
+  folders: [String!]!
+
+  """
+  Publication IDs
+  """
+  publications: [Int!]!
+
+  """
+  Creation date
+  """
+  createdAt: DateTime!
+}
+
+"""
+Semantic history entry DTO
+"""
+type SemanticHistoryEntryDto {
+  """
+  List of semantic search results
+  """
+  searchResults(
+    where: SemanticSearchResultDtoFilterInput
+  ): [SemanticSearchResultDto!]!
+
+  """
+  List of chat messages
+  """
+  chat(where: ChatMessageDtoFilterInput): [ChatMessageDto!]!
+
+  """
+  Keyword history entry identifier
+  """
+  id: UUID!
+
+  """
+  Query text
+  """
+  query: String!
+
+  """
+  Folder IDs
+  """
+  folders: [String!]!
+
+  """
+  Publication IDs
+  """
+  publications: [Int!]!
+
+  """
+  Creation date
+  """
+  createdAt: DateTime!
+
+  """
+  Gets or sets the raw results from Neo4j vector search
+  """
+  searchResult: [UnifiedSearchResultDto]
+}
+
+type KeyValuePairOfStringAndInt32 {
+  key: String!
+  value: Int!
+}
+
+type SearchHitDto {
+  index: Int!
+  snippet: String!
+  paraId: String!
+  paragraph: ParagraphDto!
+  publication: Publication!
+  weight: Float!
+  answer: String
+}
+
+type SearchSegmentInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+}
+
+input PublicationDtoFilterInput {
+  and: [PublicationDtoFilterInput!]
+  or: [PublicationDtoFilterInput!]
+  authorId: IntOperationalFilterInput
+  code: StringOperationalFilterInput
+  folderId: IntOperationalFilterInput
+  isAudioBook: BooleanOperationFilterInput
+  languageCode: StringOperationalFilterInput
+  originalPublicationId: IntOperationalFilterInput
+  permission: WemlPublicationPermissionOperationFilterInput
+  id: IntOperationalFilterInput
+  publicationYear: IntOperationalFilterInput
+  type: PublicationTypeOperationFilterInput
+  isEgwCollection: BooleanOperationFilterInput
+}
+
+"""
+A segment of a collection.
+"""
+type QueriesCollectionSegment {
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: CollectionSegmentInfo!
+
+  """
+  A flattened list of the items.
+  """
+  items: [HistoryEntry!]
+  totalCount: Int!
+}
+
+"""
+Keyword search result DTO
+"""
+input KeywordSearchResultDtoFilterInput {
+  and: [KeywordSearchResultDtoFilterInput!]
+  or: [KeywordSearchResultDtoFilterInput!]
+
+  """
+  Order of the result
+  """
+  order: IntOperationFilterInput
+
+  """
+  Result URI
+  """
+  uri: UrlOperationFilterInput
+
+  """
+  Reference code of the result.
+  """
+  referenceCode: StringOperationFilterInput
+
+  """
+  Snippet of the result.
+  """
+  snippet: StringOperationFilterInput
+
+  """
+  Score
+  """
+  score: FloatOperationFilterInput
+
+  """
+  Rating
+  """
+  rating: RatingDtoFilterInput
+}
+
+"""
+Semantic search result DTO
+"""
+input SemanticSearchResultDtoFilterInput {
+  and: [SemanticSearchResultDtoFilterInput!]
+  or: [SemanticSearchResultDtoFilterInput!]
+
+  """
+  Order of the result
+  """
+  order: IntOperationFilterInput
+
+  """
+  Result URI
+  """
+  uri: UrlOperationFilterInput
+
+  """
+  Reference code of the result.
+  """
+  referenceCode: StringOperationFilterInput
+
+  """
+  Result answer
+  """
+  answer: StringOperationFilterInput
+
+  """
+  Snippet of the result.
+  """
+  snippet: StringOperationFilterInput
+
+  """
+  Text of the result. This is a denormalized field, which is used for full-text search.
+  """
+  fullText: StringOperationFilterInput
+
+  """
+  Score
+  """
+  score: FloatOperationFilterInput
+}
+
+"""
+Chat message
+"""
+input ChatMessageDtoFilterInput {
+  and: [ChatMessageDtoFilterInput!]
+  or: [ChatMessageDtoFilterInput!]
+
+  """
+  Chat message identifier
+  """
+  id: UuidOperationFilterInput
+
+  """
+  Chat message type
+  """
+  type: ChatMessageTypeOperationFilterInput
+
+  """
+  Chat message text
+  """
+  text: StringOperationFilterInput
+
+  """
+  Rating of the chat message
+  """
+  rating: RatingDtoFilterInput
+
+  """
+  Chat message creation date
+  """
+  createdAt: DateTimeOperationFilterInput
+}
+
+"""
+Information about the offset pagination.
+"""
+type CollectionSegmentInfo {
+  """
+  Indicates whether more items exist following the set defined by the clients arguments.
+  """
+  hasNextPage: Boolean!
+
+  """
+  Indicates whether more items exist prior the set defined by the clients arguments.
+  """
+  hasPreviousPage: Boolean!
+}
+
+"""
+History entry DTO
+"""
+union HistoryEntry = KeywordHistoryEntryDto | SemanticHistoryEntryDto
+
+input IntOperationFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int]
+  nin: [Int]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input UrlOperationFilterInput {
+  eq: URL
+  neq: URL
+  in: [URL]
+  nin: [URL]
+  gt: URL
+  ngt: URL
+  gte: URL
+  ngte: URL
+  lt: URL
+  nlt: URL
+  lte: URL
+  nlte: URL
+}
+
+input StringOperationFilterInput {
+  and: [StringOperationFilterInput!]
+  or: [StringOperationFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String]
+  nin: [String]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input FloatOperationFilterInput {
+  eq: Float
+  neq: Float
+  in: [Float]
+  nin: [Float]
+  gt: Float
+  ngt: Float
+  gte: Float
+  ngte: Float
+  lt: Float
+  nlt: Float
+  lte: Float
+  nlte: Float
+}
+
+input RatingDtoFilterInput {
+  and: [RatingDtoFilterInput!]
+  or: [RatingDtoFilterInput!]
+  vote: NullableOfVoteTypeEnumOperationFilterInput
+  rating: IntOperationFilterInput
+}
+
+input UuidOperationFilterInput {
+  eq: UUID
+  neq: UUID
+  in: [UUID]
+  nin: [UUID]
+  gt: UUID
+  ngt: UUID
+  gte: UUID
+  ngte: UUID
+  lt: UUID
+  nlt: UUID
+  lte: UUID
+  nlte: UUID
+}
+
+input ChatMessageTypeOperationFilterInput {
+  eq: ChatMessageType
+  neq: ChatMessageType
+  in: [ChatMessageType!]
+  nin: [ChatMessageType!]
+}
+
+input DateTimeOperationFilterInput {
+  eq: DateTime
+  neq: DateTime
+  in: [DateTime]
+  nin: [DateTime]
+  gt: DateTime
+  ngt: DateTime
+  gte: DateTime
+  ngte: DateTime
+  lt: DateTime
+  nlt: DateTime
+  lte: DateTime
+  nlte: DateTime
+}
+
+scalar URL @specifiedBy(url: "https://tools.ietf.org/html/rfc3986")
+
+input NullableOfVoteTypeEnumOperationFilterInput {
+  eq: VoteTypeEnum
+  neq: VoteTypeEnum
+  in: [VoteTypeEnum]
+  nin: [VoteTypeEnum]
+}
+
+scalar UUID @specifiedBy(url: "https://tools.ietf.org/html/rfc4122")
+
+enum EGWQueryTypeEnum {
+  EXACT
+  PREFER_EXACT
+  EXCLUDE_EXACT
+  STEMMED
+}
+
+input SearchInputPaginationFilterInput {
+  page: String
+  paragraph: Int
+}
+
+input SearchInputManuscriptsFilterInput {
+  number: String
+  year: Int
+  type: LtMsTypeEnum
+  addressee: String
+  place: String
+}
+
+input SearchInputDateFilterInput {
+  before: DateTime
+  after: DateTime
+}
+
+input SearchInputBibleFilterInput {
+  book: String
+  chapter: Int
+  verse: Int
+}
+
+enum SortOrderEnum {
+  SEQUENCE
+  SEQUENCE_DESCENDING
+  DATE
+  DATE_DESCENDING
+  RELEVANCY
+  WEIGHTED_RELEVANCY
+}
+
+enum ChatMessageType {
+  USER
+  SYSTEM
+}
+
+"""
+Folder DTO
+"""
+type FolderDto {
+  """
+  Folder identifier
+  """
+  id: String!
+
+  """
+  Folder title
+  """
+  title: String!
+
+  """
+  Folder parent identifier
+  """
+  parentId: String
+
+  """
+  Is checked by default
+  """
+  checked: Boolean!
+
+  """
+  Global order
+  """
+  order: Int!
+}
+
+enum SearchTypeEnum {
+  AUTO
+  AI_SEARCH
+  KEYWORD_SEARCH
+}
+
+input SearchFilterRequestInput {
+  folders: [String!]
+  publications: [Int!]
+}
+
+type RatingDto {
+  vote: VoteTypeEnum
+  rating: Int!
+}
+
+input VoteForChatMessageInput {
+  messageId: UUID!
+  vote: VoteTypeEnum
+}
+
+input VoteForSearchResultInput {
+  queryId: UUID!
+  order: Int!
+  vote: VoteTypeEnum
+}
+
+"""
+Chat reply stream
+"""
+type ChatTokenStreamDto {
+  """
+  List of tokens
+  """
+  tokens: [ChatTokenDto!]!
+
+  """
+  Stream identifier
+  """
+  id: UUID!
+}
+
+input PostReplyToChatInput {
+  queryId: UUID!
+  userMessage: String!
+  userMessageId: UUID!
+  systemMessageId: UUID!
+}
+
+input GenerateReplyToUserMessageInput {
+  userMessageId: UUID!
+  systemMessageId: UUID!
+}
+
+"""
+Keyword search result DTO
+"""
+type KeywordSearchResultDto {
+  """
+  Order of the result
+  """
+  order: Int!
+
+  """
+  Result URI
+  """
+  uri: URL
+
+  """
+  Reference code of the result.
+  """
+  referenceCode: String!
+
+  """
+  Snippet of the result.
+  """
+  snippet: String!
+
+  """
+  Score
+  """
+  score: Float!
+
+  """
+  Rating
+  """
+  rating: RatingDto!
+}
+
+"""
+Semantic search result DTO
+"""
+type SemanticSearchResultDto {
+  """
+  Order of the result
+  """
+  order: Int!
+
+  """
+  Result URI
+  """
+  uri: URL
+
+  """
+  Reference code of the result.
+  """
+  referenceCode: String!
+
+  """
+  Result answer
+  """
+  answer: String!
+
+  """
+  Snippet of the result.
+  """
+  snippet: String!
+
+  """
+  Text of the result. This is a denormalized field, which is used for full-text search.
+  """
+  fullText: String!
+
+  """
+  Score
+  """
+  score: Float!
+}
+
+"""
+Chat message
+"""
+type ChatMessageDto {
+  """
+  Chat message identifier
+  """
+  id: UUID!
+
+  """
+  Chat message type
+  """
+  type: ChatMessageType!
+
+  """
+  Chat message text
+  """
+  text: String!
+
+  """
+  Rating of the chat message
+  """
+  rating: RatingDto!
+
+  """
+  Chat message creation date
+  """
+  createdAt: DateTime!
+}
+
+type ParagraphDto {
+  paraId: String!
+  chapterId: String!
+  order: Int
+  content: String
+  actualPageNumber: Int
+  refCodes: RefCodesDto
+  metadata: MetadataDto
+  languageCode: String
+  language: Language
+}
+
+input IntOperationalFilterInput {
+  eq: Int
+  neq: Int
+  in: [Int!]
+  nin: [Int!]
+  gt: Int
+  ngt: Int
+  gte: Int
+  ngte: Int
+  lt: Int
+  nlt: Int
+  lte: Int
+  nlte: Int
+}
+
+input StringOperationalFilterInput {
+  and: [StringOperationalFilterInput!]
+  or: [StringOperationalFilterInput!]
+  eq: String
+  neq: String
+  contains: String
+  ncontains: String
+  in: [String!]
+  nin: [String!]
+  startsWith: String
+  nstartsWith: String
+  endsWith: String
+  nendsWith: String
+}
+
+input BooleanOperationFilterInput {
+  eq: Boolean
+  neq: Boolean
+}
+
+input WemlPublicationPermissionOperationFilterInput {
+  eq: WemlPublicationPermission
+  neq: WemlPublicationPermission
+  in: [WemlPublicationPermission!]
+  nin: [WemlPublicationPermission!]
+}
+
+input PublicationTypeOperationFilterInput {
+  eq: PublicationType
+  neq: PublicationType
+  in: [PublicationType!]
+  nin: [PublicationType!]
+}
+
+"""
+Vote type
+"""
+enum VoteTypeEnum {
+  """
+  Upvote
+  """
+  UPVOTE
+
+  """
+  Downvote
+  """
+  DOWNVOTE
+}
+
+enum WemlPublicationPermission {
+  PUBLIC
+  AUTHENTICATED_ONLY
+  PURCHASED_ONLY
+}
+
+type MetadataDto {
+  paraId: String
+  pagination: PaginationMetadataDto
+  date: DateTime
+  bibleReference: BibleReferenceDto
+  manuscript: ManuscriptInfoDto
+}
+
+type RefCodesDto {
+  short: String
+  long: String
+}
+
+"""
+Chunk of the chat reply
+"""
+type ChatTokenDto {
+  """
+  Word
+  """
+  token: String!
+}
+
+enum LtMsTypeEnum {
+  LETTER
+  MANUSCRIPT
+}
+
+type ManuscriptInfoDto {
+  addressee: String
+  title: String
+  place: String
+}
+
+type BibleReferenceDto {
+  book: String
+  chapter: Int
+  verses: [Int!]
+}
+
+type PaginationMetadataDto {
+  section: String
+  paragraph: Int
+}
+
+input SearchInput {
+  """
+  Query ID
+  """
+  id: UUID
+
+  """
+  Query text
+  """
+  query: String!
+
+  """
+  Search typs
+  """
+  type: SearchTypeEnum
+
+  """
+  Filters
+  """
+  filter: SearchFilterRequestInput
+}
+
+type SearchPayload {
+  historyEntry: HistoryEntry
+}
+
+type VoteForChatMessagePayload {
+  ratingDto: RatingDto
+}
+
+type VoteForSearchResultPayload {
+  ratingDto: RatingDto
+}
+
+input DeleteQueryInput {
+  """
+  Query ID
+  """
+  id: UUID!
+}
+
+type DeleteQueryPayload {
+  boolean: Boolean
+}
+
+type ClearHistoryPayload {
+  boolean: Boolean
+}
+
+type PostReplyToChatPayload {
+  chatTokenStreamDto: ChatTokenStreamDto
+}
+
+type GenerateReplyToUserMessagePayload {
+  chatTokenStreamDto: ChatTokenStreamDto
+}
