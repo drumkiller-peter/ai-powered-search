@@ -166,6 +166,8 @@ abstract class GAIPoweredSearchData_search_items_publication
   bool? get isAudioBook;
   int? get folderId;
   String? get permission;
+  GAIPoweredSearchData_search_items_publication_author? get author;
+  int? get pageCount;
   static Serializer<GAIPoweredSearchData_search_items_publication>
       get serializer => _$gAIPoweredSearchDataSearchItemsPublicationSerializer;
 
@@ -178,6 +180,43 @@ abstract class GAIPoweredSearchData_search_items_publication
           Map<String, dynamic> json) =>
       _i1.serializers.deserializeWith(
         GAIPoweredSearchData_search_items_publication.serializer,
+        json,
+      );
+}
+
+abstract class GAIPoweredSearchData_search_items_publication_author
+    implements
+        Built<GAIPoweredSearchData_search_items_publication_author,
+            GAIPoweredSearchData_search_items_publication_authorBuilder> {
+  GAIPoweredSearchData_search_items_publication_author._();
+
+  factory GAIPoweredSearchData_search_items_publication_author(
+      [void Function(
+              GAIPoweredSearchData_search_items_publication_authorBuilder b)
+          updates]) = _$GAIPoweredSearchData_search_items_publication_author;
+
+  static void _initializeBuilder(
+          GAIPoweredSearchData_search_items_publication_authorBuilder b) =>
+      b..G__typename = 'Author';
+
+  @BuiltValueField(wireName: '__typename')
+  String get G__typename;
+  String? get firstName;
+  String? get lastName;
+  String? get middleName;
+  static Serializer<GAIPoweredSearchData_search_items_publication_author>
+      get serializer =>
+          _$gAIPoweredSearchDataSearchItemsPublicationAuthorSerializer;
+
+  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
+        GAIPoweredSearchData_search_items_publication_author.serializer,
+        this,
+      ) as Map<String, dynamic>);
+
+  static GAIPoweredSearchData_search_items_publication_author? fromJson(
+          Map<String, dynamic> json) =>
+      _i1.serializers.deserializeWith(
+        GAIPoweredSearchData_search_items_publication_author.serializer,
         json,
       );
 }
@@ -199,6 +238,8 @@ abstract class GAIPoweredSearchData_search_items_paragraph
   @BuiltValueField(wireName: '__typename')
   String get G__typename;
   GAIPoweredSearchData_search_items_paragraph_refCodes? get refCodes;
+  String get chapterId;
+  String get paraId;
   String? get content;
   GAIPoweredSearchData_search_items_paragraph_metadata? get metadata;
   static Serializer<GAIPoweredSearchData_search_items_paragraph>
@@ -273,8 +314,6 @@ abstract class GAIPoweredSearchData_search_items_paragraph_metadata
   String? get paraId;
   GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference?
       get bibleReference;
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript?
-      get manuscript;
   static Serializer<GAIPoweredSearchData_search_items_paragraph_metadata>
       get serializer =>
           _$gAIPoweredSearchDataSearchItemsParagraphMetadataSerializer;
@@ -330,48 +369,6 @@ abstract class GAIPoweredSearchData_search_items_paragraph_metadata_bibleReferen
   static GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference?
       fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
             GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference
-                .serializer,
-            json,
-          );
-}
-
-abstract class GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
-    implements
-        Built<GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
-            GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder> {
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript._();
-
-  factory GAIPoweredSearchData_search_items_paragraph_metadata_manuscript(
-          [void Function(
-                  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder
-                      b)
-              updates]) =
-      _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript;
-
-  static void _initializeBuilder(
-          GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder
-              b) =>
-      b..G__typename = 'ManuscriptInfoDto';
-
-  @BuiltValueField(wireName: '__typename')
-  String get G__typename;
-  String? get addressee;
-  String? get place;
-  String? get title;
-  static Serializer<
-          GAIPoweredSearchData_search_items_paragraph_metadata_manuscript>
-      get serializer =>
-          _$gAIPoweredSearchDataSearchItemsParagraphMetadataManuscriptSerializer;
-
-  Map<String, dynamic> toJson() => (_i1.serializers.serializeWith(
-        GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
-            .serializer,
-        this,
-      ) as Map<String, dynamic>);
-
-  static GAIPoweredSearchData_search_items_paragraph_metadata_manuscript?
-      fromJson(Map<String, dynamic> json) => _i1.serializers.deserializeWith(
-            GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
                 .serializer,
             json,
           );

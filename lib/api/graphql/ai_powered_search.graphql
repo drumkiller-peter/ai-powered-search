@@ -4,6 +4,7 @@ query AIPoweredSearch(
   $language: String
   $queryType: EGWQueryTypeEnum
   $orderBy: SortOrderEnum
+  $filter: SearchInputFilterInput
 ) {
   search(
     query: $query
@@ -11,6 +12,7 @@ query AIPoweredSearch(
     language: $language
     queryType: $queryType
     orderBy: $orderBy
+    filter: $filter
   ) {
     totalCount
     info {
@@ -30,11 +32,19 @@ query AIPoweredSearch(
         isAudioBook
         folderId
         permission
+        author {
+          firstName
+          lastName
+          middleName
+        }
+        pageCount
       }
       paragraph {
         refCodes {
           short
         }
+        chapterId
+        paraId
         content
         metadata {
           date
@@ -43,11 +53,6 @@ query AIPoweredSearch(
             book
             chapter
             verses
-          }
-          manuscript {
-            addressee
-            place
-            title
           }
         }
       }

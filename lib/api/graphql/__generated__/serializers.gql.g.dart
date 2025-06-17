@@ -16,10 +16,9 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(GAIPoweredSearchData_search_items_paragraph_metadata.serializer)
       ..add(GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference
           .serializer)
-      ..add(GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
-          .serializer)
       ..add(GAIPoweredSearchData_search_items_paragraph_refCodes.serializer)
       ..add(GAIPoweredSearchData_search_items_publication.serializer)
+      ..add(GAIPoweredSearchData_search_items_publication_author.serializer)
       ..add(GAIPoweredSearchReq.serializer)
       ..add(GAIPoweredSearchVars.serializer)
       ..add(GAny.serializer)

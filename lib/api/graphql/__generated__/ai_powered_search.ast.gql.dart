@@ -53,6 +53,15 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],
     ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'filter')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'SearchInputFilterInput'),
+        isNonNull: false,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
   ],
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
@@ -79,6 +88,10 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
         _i1.ArgumentNode(
           name: _i1.NameNode(value: 'orderBy'),
           value: _i1.VariableNode(name: _i1.NameNode(value: 'orderBy')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'filter'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'filter')),
         ),
       ],
       directives: [],
@@ -201,6 +214,42 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
                   directives: [],
                   selectionSet: null,
                 ),
+                _i1.FieldNode(
+                  name: _i1.NameNode(value: 'author'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: _i1.SelectionSetNode(selections: [
+                    _i1.FieldNode(
+                      name: _i1.NameNode(value: 'firstName'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null,
+                    ),
+                    _i1.FieldNode(
+                      name: _i1.NameNode(value: 'lastName'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null,
+                    ),
+                    _i1.FieldNode(
+                      name: _i1.NameNode(value: 'middleName'),
+                      alias: null,
+                      arguments: [],
+                      directives: [],
+                      selectionSet: null,
+                    ),
+                  ]),
+                ),
+                _i1.FieldNode(
+                  name: _i1.NameNode(value: 'pageCount'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
               ]),
             ),
             _i1.FieldNode(
@@ -223,6 +272,20 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
                       selectionSet: null,
                     )
                   ]),
+                ),
+                _i1.FieldNode(
+                  name: _i1.NameNode(value: 'chapterId'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
+                ),
+                _i1.FieldNode(
+                  name: _i1.NameNode(value: 'paraId'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null,
                 ),
                 _i1.FieldNode(
                   name: _i1.NameNode(value: 'content'),
@@ -273,35 +336,6 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
                         ),
                         _i1.FieldNode(
                           name: _i1.NameNode(value: 'verses'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null,
-                        ),
-                      ]),
-                    ),
-                    _i1.FieldNode(
-                      name: _i1.NameNode(value: 'manuscript'),
-                      alias: null,
-                      arguments: [],
-                      directives: [],
-                      selectionSet: _i1.SelectionSetNode(selections: [
-                        _i1.FieldNode(
-                          name: _i1.NameNode(value: 'addressee'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null,
-                        ),
-                        _i1.FieldNode(
-                          name: _i1.NameNode(value: 'place'),
-                          alias: null,
-                          arguments: [],
-                          directives: [],
-                          selectionSet: null,
-                        ),
-                        _i1.FieldNode(
-                          name: _i1.NameNode(value: 'title'),
                           alias: null,
                           arguments: [],
                           directives: [],

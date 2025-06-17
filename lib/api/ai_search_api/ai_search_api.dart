@@ -1,8 +1,9 @@
 import 'dart:developer';
 
 import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.req.gql.dart';
-import 'package:ai_powered_search/api/graphql/__generated__/schema.schema.gql.dart';
 import 'package:ai_powered_search/enums/ai_search_enums.dart';
+import 'package:ai_powered_search/mappers/enum_mapper.dart';
+import 'package:ai_powered_search/models/ai_powered_search_filter.dart';
 import 'package:ai_powered_search/models/ai_powered_search_response.dart';
 import 'package:ai_powered_search/models/egw_book_model.dart';
 import 'package:ferry/ferry.dart';
@@ -16,19 +17,58 @@ class AiSearchApi {
     required Client client,
     AISearchQueryTypeEnum? queryType,
     AISearchSortOrderEnum? sortOrder,
+    AiPoweredSearchFilter? filter,
   }) async {
     var res = await client
         .request(
           GAIPoweredSearchReq((builder) async {
-            builder.fetchPolicy = FetchPolicy.NetworkOnly;
+            builder.fetchPolicy = FetchPolicy.CacheAndNetwork;
             builder.vars.query = query;
             builder.vars.language = languageCode;
             builder.vars.type = searchMode;
             if (queryType != null) {
-              builder.vars.queryType = _mapToEGWQueryTypeEnum(queryType);
+              builder.vars.queryType = mapToEGWQueryTypeEnum(queryType);
             }
             if (sortOrder != null) {
-              builder.vars.orderBy = _mapToEGWSortOrderEnum(sortOrder);
+              builder.vars.orderBy = mapToEGWSortOrderEnum(sortOrder);
+            }
+            if (filter != null) {
+              if (filter.headingsOnly != null) {
+                builder.vars.filter.headingsOnly = filter.headingsOnly;
+              }
+              if (filter.egwWritingsCollection != null) {
+                builder.vars.filter.egwWritingsCollection =
+                    filter.egwWritingsCollection;
+              }
+              if (filter.publications != null &&
+                  filter.publications!.isNotEmpty) {
+                builder.vars.filter.publications.include.addAll(
+                  filter.publications!,
+                );
+              }
+              if (filter.folders != null && filter.folders!.isNotEmpty) {
+                builder.vars.filter.folders.include.addAll(filter.folders!);
+              }
+              if (filter.chapters != null && filter.chapters!.isNotEmpty) {
+                builder.vars.filter.chapters.all.addAll(filter.chapters!);
+              }
+
+              if (filter.folderTypes != null &&
+                  filter.folderTypes!.isNotEmpty) {
+                builder.vars.filter.folderTypes.include.addAll(
+                  filter.folderTypes?.map((e) => mapToGWemlFolderType(e)) ?? [],
+                );
+              }
+
+              if (filter.publicationTypes != null &&
+                  filter.publicationTypes!.isNotEmpty) {
+                builder.vars.filter.publicationTypes.include.addAll(
+                  filter.publicationTypes?.map(
+                        (e) => mapToGWemlPublicationType(e),
+                      ) ??
+                      [],
+                );
+              }
             }
           }),
         )
@@ -37,7 +77,7 @@ class AiSearchApi {
           return result;
         })
         .first;
-    log("${res.data?.search.toJson()}", name: "performAiPoweredSearch");
+    // log("${res.data?.search.toJson()}", name: "performAiPoweredSearch");
 
     final searchData = res.data?.search;
     if (searchData == null) {
@@ -77,35 +117,5 @@ void _handleGraphQlError(OperationResponse result) {
       result.graphqlErrors != null,
       Exception(result.graphqlErrors?.first.message),
     );
-  }
-}
-
-GEGWQueryTypeEnum _mapToEGWQueryTypeEnum(AISearchQueryTypeEnum type) {
-  switch (type) {
-    case AISearchQueryTypeEnum.exact:
-      return GEGWQueryTypeEnum.EXACT;
-    case AISearchQueryTypeEnum.preferExact:
-      return GEGWQueryTypeEnum.PREFER_EXACT;
-    case AISearchQueryTypeEnum.excludeExact:
-      return GEGWQueryTypeEnum.EXCLUDE_EXACT;
-    case AISearchQueryTypeEnum.stemmed:
-      return GEGWQueryTypeEnum.STEMMED;
-  }
-}
-
-GSortOrderEnum _mapToEGWSortOrderEnum(AISearchSortOrderEnum type) {
-  switch (type) {
-    case AISearchSortOrderEnum.sequence:
-      return GSortOrderEnum.SEQUENCE;
-    case AISearchSortOrderEnum.sequenceDescending:
-      return GSortOrderEnum.SEQUENCE_DESCENDING;
-    case AISearchSortOrderEnum.date:
-      return GSortOrderEnum.DATE;
-    case AISearchSortOrderEnum.dateDescending:
-      return GSortOrderEnum.DATE_DESCENDING;
-    case AISearchSortOrderEnum.relevancy:
-      return GSortOrderEnum.RELEVANCY;
-    case AISearchSortOrderEnum.weightedRelevancy:
-      return GSortOrderEnum.WEIGHTED_RELEVANCY;
   }
 }

@@ -52,6 +52,13 @@ class _$GAIPoweredSearchVarsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(_i1.GSortOrderEnum)));
     }
+    value = object.filter;
+    if (value != null) {
+      result
+        ..add('filter')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(_i1.GSearchInputFilterInput)));
+    }
     return result;
   }
 
@@ -89,6 +96,11 @@ class _$GAIPoweredSearchVarsSerializer
                   specifiedType: const FullType(_i1.GSortOrderEnum))
               as _i1.GSortOrderEnum?;
           break;
+        case 'filter':
+          result.filter.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(_i1.GSearchInputFilterInput))!
+              as _i1.GSearchInputFilterInput);
+          break;
       }
     }
 
@@ -107,6 +119,8 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
   final _i1.GEGWQueryTypeEnum? queryType;
   @override
   final _i1.GSortOrderEnum? orderBy;
+  @override
+  final _i1.GSearchInputFilterInput? filter;
 
   factory _$GAIPoweredSearchVars(
           [void Function(GAIPoweredSearchVarsBuilder)? updates]) =>
@@ -117,7 +131,8 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
       required this.type,
       this.language,
       this.queryType,
-      this.orderBy})
+      this.orderBy,
+      this.filter})
       : super._();
   @override
   GAIPoweredSearchVars rebuild(
@@ -136,7 +151,8 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
         type == other.type &&
         language == other.language &&
         queryType == other.queryType &&
-        orderBy == other.orderBy;
+        orderBy == other.orderBy &&
+        filter == other.filter;
   }
 
   @override
@@ -147,6 +163,7 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
     _$hash = $jc(_$hash, language.hashCode);
     _$hash = $jc(_$hash, queryType.hashCode);
     _$hash = $jc(_$hash, orderBy.hashCode);
+    _$hash = $jc(_$hash, filter.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -158,7 +175,8 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
           ..add('type', type)
           ..add('language', language)
           ..add('queryType', queryType)
-          ..add('orderBy', orderBy))
+          ..add('orderBy', orderBy)
+          ..add('filter', filter))
         .toString();
   }
 }
@@ -188,6 +206,12 @@ class GAIPoweredSearchVarsBuilder
   _i1.GSortOrderEnum? get orderBy => _$this._orderBy;
   set orderBy(_i1.GSortOrderEnum? orderBy) => _$this._orderBy = orderBy;
 
+  _i1.GSearchInputFilterInputBuilder? _filter;
+  _i1.GSearchInputFilterInputBuilder get filter =>
+      _$this._filter ??= _i1.GSearchInputFilterInputBuilder();
+  set filter(_i1.GSearchInputFilterInputBuilder? filter) =>
+      _$this._filter = filter;
+
   GAIPoweredSearchVarsBuilder();
 
   GAIPoweredSearchVarsBuilder get _$this {
@@ -198,6 +222,7 @@ class GAIPoweredSearchVarsBuilder
       _language = $v.language;
       _queryType = $v.queryType;
       _orderBy = $v.orderBy;
+      _filter = $v.filter?.toBuilder();
       _$v = null;
     }
     return this;
@@ -217,16 +242,30 @@ class GAIPoweredSearchVarsBuilder
   GAIPoweredSearchVars build() => _build();
 
   _$GAIPoweredSearchVars _build() {
-    final _$result = _$v ??
-        _$GAIPoweredSearchVars._(
-          query: BuiltValueNullFieldError.checkNotNull(
-              query, r'GAIPoweredSearchVars', 'query'),
-          type: BuiltValueNullFieldError.checkNotNull(
-              type, r'GAIPoweredSearchVars', 'type'),
-          language: language,
-          queryType: queryType,
-          orderBy: orderBy,
-        );
+    _$GAIPoweredSearchVars _$result;
+    try {
+      _$result = _$v ??
+          _$GAIPoweredSearchVars._(
+            query: BuiltValueNullFieldError.checkNotNull(
+                query, r'GAIPoweredSearchVars', 'query'),
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'GAIPoweredSearchVars', 'type'),
+            language: language,
+            queryType: queryType,
+            orderBy: orderBy,
+            filter: _filter?.build(),
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'filter';
+        _filter?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+            r'GAIPoweredSearchVars', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

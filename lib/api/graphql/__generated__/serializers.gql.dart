@@ -10,9 +10,9 @@ import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.da
         GAIPoweredSearchData_search_items_paragraph,
         GAIPoweredSearchData_search_items_paragraph_metadata,
         GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference,
-        GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
         GAIPoweredSearchData_search_items_paragraph_refCodes,
-        GAIPoweredSearchData_search_items_publication;
+        GAIPoweredSearchData_search_items_publication,
+        GAIPoweredSearchData_search_items_publication_author;
 import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.req.gql.dart'
     show GAIPoweredSearchReq;
 import 'package:ai_powered_search/api/graphql/__generated__/ai_powered_search.var.gql.dart'
@@ -88,9 +88,9 @@ final SerializersBuilder _serializersBuilder = _$serializers.toBuilder()
   GAIPoweredSearchData_search_items_paragraph,
   GAIPoweredSearchData_search_items_paragraph_metadata,
   GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference,
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
   GAIPoweredSearchData_search_items_paragraph_refCodes,
   GAIPoweredSearchData_search_items_publication,
+  GAIPoweredSearchData_search_items_publication_author,
   GAIPoweredSearchReq,
   GAIPoweredSearchVars,
   GAny,

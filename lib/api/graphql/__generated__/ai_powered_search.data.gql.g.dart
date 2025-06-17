@@ -19,6 +19,9 @@ Serializer<GAIPoweredSearchData_search_items>
 Serializer<GAIPoweredSearchData_search_items_publication>
     _$gAIPoweredSearchDataSearchItemsPublicationSerializer =
     _$GAIPoweredSearchData_search_items_publicationSerializer();
+Serializer<GAIPoweredSearchData_search_items_publication_author>
+    _$gAIPoweredSearchDataSearchItemsPublicationAuthorSerializer =
+    _$GAIPoweredSearchData_search_items_publication_authorSerializer();
 Serializer<GAIPoweredSearchData_search_items_paragraph>
     _$gAIPoweredSearchDataSearchItemsParagraphSerializer =
     _$GAIPoweredSearchData_search_items_paragraphSerializer();
@@ -31,9 +34,6 @@ Serializer<GAIPoweredSearchData_search_items_paragraph_metadata>
 Serializer<GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference>
     _$gAIPoweredSearchDataSearchItemsParagraphMetadataBibleReferenceSerializer =
     _$GAIPoweredSearchData_search_items_paragraph_metadata_bibleReferenceSerializer();
-Serializer<GAIPoweredSearchData_search_items_paragraph_metadata_manuscript>
-    _$gAIPoweredSearchDataSearchItemsParagraphMetadataManuscriptSerializer =
-    _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptSerializer();
 
 class _$GAIPoweredSearchDataSerializer
     implements StructuredSerializer<GAIPoweredSearchData> {
@@ -390,6 +390,20 @@ class _$GAIPoweredSearchData_search_items_publicationSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.author;
+    if (value != null) {
+      result
+        ..add('author')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(
+                GAIPoweredSearchData_search_items_publication_author)));
+    }
+    value = object.pageCount;
+    if (value != null) {
+      result
+        ..add('pageCount')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -437,6 +451,99 @@ class _$GAIPoweredSearchData_search_items_publicationSerializer
           result.permission = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'author':
+          result.author.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      GAIPoweredSearchData_search_items_publication_author))!
+              as GAIPoweredSearchData_search_items_publication_author);
+          break;
+        case 'pageCount':
+          result.pageCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GAIPoweredSearchData_search_items_publication_authorSerializer
+    implements
+        StructuredSerializer<
+            GAIPoweredSearchData_search_items_publication_author> {
+  @override
+  final Iterable<Type> types = const [
+    GAIPoweredSearchData_search_items_publication_author,
+    _$GAIPoweredSearchData_search_items_publication_author
+  ];
+  @override
+  final String wireName =
+      'GAIPoweredSearchData_search_items_publication_author';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers,
+      GAIPoweredSearchData_search_items_publication_author object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      '__typename',
+      serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.firstName;
+    if (value != null) {
+      result
+        ..add('firstName')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.lastName;
+    if (value != null) {
+      result
+        ..add('lastName')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.middleName;
+    if (value != null) {
+      result
+        ..add('middleName')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  GAIPoweredSearchData_search_items_publication_author deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result =
+        GAIPoweredSearchData_search_items_publication_authorBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case '__typename':
+          result.G__typename = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'firstName':
+          result.firstName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'lastName':
+          result.lastName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'middleName':
+          result.middleName = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -462,6 +569,12 @@ class _$GAIPoweredSearchData_search_items_paragraphSerializer
     final result = <Object?>[
       '__typename',
       serializers.serialize(object.G__typename,
+          specifiedType: const FullType(String)),
+      'chapterId',
+      serializers.serialize(object.chapterId,
+          specifiedType: const FullType(String)),
+      'paraId',
+      serializers.serialize(object.paraId,
           specifiedType: const FullType(String)),
     ];
     Object? value;
@@ -512,6 +625,14 @@ class _$GAIPoweredSearchData_search_items_paragraphSerializer
                   specifiedType: const FullType(
                       GAIPoweredSearchData_search_items_paragraph_refCodes))!
               as GAIPoweredSearchData_search_items_paragraph_refCodes);
+          break;
+        case 'chapterId':
+          result.chapterId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'paraId':
+          result.paraId = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'content':
           result.content = serializers.deserialize(value,
@@ -636,14 +757,6 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadataSerializer
             specifiedType: const FullType(
                 GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference)));
     }
-    value = object.manuscript;
-    if (value != null) {
-      result
-        ..add('manuscript')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(
-                GAIPoweredSearchData_search_items_paragraph_metadata_manuscript)));
-    }
     return result;
   }
 
@@ -677,12 +790,6 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadataSerializer
                   specifiedType: const FullType(
                       GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference))!
               as GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference);
-          break;
-        case 'manuscript':
-          result.manuscript.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      GAIPoweredSearchData_search_items_paragraph_metadata_manuscript))!
-              as GAIPoweredSearchData_search_items_paragraph_metadata_manuscript);
           break;
       }
     }
@@ -770,89 +877,6 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadata_bibleReferenceSeria
                   specifiedType:
                       const FullType(BuiltList, const [const FullType(int)]))!
               as BuiltList<Object?>);
-          break;
-      }
-    }
-
-    return result.build();
-  }
-}
-
-class _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptSerializer
-    implements
-        StructuredSerializer<
-            GAIPoweredSearchData_search_items_paragraph_metadata_manuscript> {
-  @override
-  final Iterable<Type> types = const [
-    GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
-    _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
-  ];
-  @override
-  final String wireName =
-      'GAIPoweredSearchData_search_items_paragraph_metadata_manuscript';
-
-  @override
-  Iterable<Object?> serialize(Serializers serializers,
-      GAIPoweredSearchData_search_items_paragraph_metadata_manuscript object,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      '__typename',
-      serializers.serialize(object.G__typename,
-          specifiedType: const FullType(String)),
-    ];
-    Object? value;
-    value = object.addressee;
-    if (value != null) {
-      result
-        ..add('addressee')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.place;
-    if (value != null) {
-      result
-        ..add('place')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    value = object.title;
-    if (value != null) {
-      result
-        ..add('title')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
-    return result;
-  }
-
-  @override
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript deserialize(
-      Serializers serializers, Iterable<Object?> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    final result =
-        GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder();
-
-    final iterator = serialized.iterator;
-    while (iterator.moveNext()) {
-      final key = iterator.current! as String;
-      iterator.moveNext();
-      final Object? value = iterator.current;
-      switch (key) {
-        case '__typename':
-          result.G__typename = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'addressee':
-          result.addressee = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'place':
-          result.place = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
-          break;
-        case 'title':
-          result.title = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -1447,6 +1471,10 @@ class _$GAIPoweredSearchData_search_items_publication
   final int? folderId;
   @override
   final String? permission;
+  @override
+  final GAIPoweredSearchData_search_items_publication_author? author;
+  @override
+  final int? pageCount;
 
   factory _$GAIPoweredSearchData_search_items_publication(
           [void Function(GAIPoweredSearchData_search_items_publicationBuilder)?
@@ -1462,7 +1490,9 @@ class _$GAIPoweredSearchData_search_items_publication
       this.languageCode,
       this.isAudioBook,
       this.folderId,
-      this.permission})
+      this.permission,
+      this.author,
+      this.pageCount})
       : super._();
   @override
   GAIPoweredSearchData_search_items_publication rebuild(
@@ -1485,7 +1515,9 @@ class _$GAIPoweredSearchData_search_items_publication
         languageCode == other.languageCode &&
         isAudioBook == other.isAudioBook &&
         folderId == other.folderId &&
-        permission == other.permission;
+        permission == other.permission &&
+        author == other.author &&
+        pageCount == other.pageCount;
   }
 
   @override
@@ -1499,6 +1531,8 @@ class _$GAIPoweredSearchData_search_items_publication
     _$hash = $jc(_$hash, isAudioBook.hashCode);
     _$hash = $jc(_$hash, folderId.hashCode);
     _$hash = $jc(_$hash, permission.hashCode);
+    _$hash = $jc(_$hash, author.hashCode);
+    _$hash = $jc(_$hash, pageCount.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1514,7 +1548,9 @@ class _$GAIPoweredSearchData_search_items_publication
           ..add('languageCode', languageCode)
           ..add('isAudioBook', isAudioBook)
           ..add('folderId', folderId)
-          ..add('permission', permission))
+          ..add('permission', permission)
+          ..add('author', author)
+          ..add('pageCount', pageCount))
         .toString();
   }
 }
@@ -1557,6 +1593,19 @@ class GAIPoweredSearchData_search_items_publicationBuilder
   String? get permission => _$this._permission;
   set permission(String? permission) => _$this._permission = permission;
 
+  GAIPoweredSearchData_search_items_publication_authorBuilder? _author;
+  GAIPoweredSearchData_search_items_publication_authorBuilder get author =>
+      _$this._author ??=
+          GAIPoweredSearchData_search_items_publication_authorBuilder();
+  set author(
+          GAIPoweredSearchData_search_items_publication_authorBuilder?
+              author) =>
+      _$this._author = author;
+
+  int? _pageCount;
+  int? get pageCount => _$this._pageCount;
+  set pageCount(int? pageCount) => _$this._pageCount = pageCount;
+
   GAIPoweredSearchData_search_items_publicationBuilder() {
     GAIPoweredSearchData_search_items_publication._initializeBuilder(this);
   }
@@ -1572,6 +1621,8 @@ class GAIPoweredSearchData_search_items_publicationBuilder
       _isAudioBook = $v.isAudioBook;
       _folderId = $v.folderId;
       _permission = $v.permission;
+      _author = $v.author?.toBuilder();
+      _pageCount = $v.pageCount;
       _$v = null;
     }
     return this;
@@ -1593,18 +1644,178 @@ class GAIPoweredSearchData_search_items_publicationBuilder
   GAIPoweredSearchData_search_items_publication build() => _build();
 
   _$GAIPoweredSearchData_search_items_publication _build() {
+    _$GAIPoweredSearchData_search_items_publication _$result;
+    try {
+      _$result = _$v ??
+          _$GAIPoweredSearchData_search_items_publication._(
+            G__typename: BuiltValueNullFieldError.checkNotNull(
+                G__typename,
+                r'GAIPoweredSearchData_search_items_publication',
+                'G__typename'),
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'GAIPoweredSearchData_search_items_publication', 'id'),
+            title: title,
+            code: code,
+            languageCode: languageCode,
+            isAudioBook: isAudioBook,
+            folderId: folderId,
+            permission: permission,
+            author: _author?.build(),
+            pageCount: pageCount,
+          );
+    } catch (_) {
+      late String _$failedField;
+      try {
+        _$failedField = 'author';
+        _author?.build();
+      } catch (e) {
+        throw BuiltValueNestedFieldError(
+            r'GAIPoweredSearchData_search_items_publication',
+            _$failedField,
+            e.toString());
+      }
+      rethrow;
+    }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GAIPoweredSearchData_search_items_publication_author
+    extends GAIPoweredSearchData_search_items_publication_author {
+  @override
+  final String G__typename;
+  @override
+  final String? firstName;
+  @override
+  final String? lastName;
+  @override
+  final String? middleName;
+
+  factory _$GAIPoweredSearchData_search_items_publication_author(
+          [void Function(
+                  GAIPoweredSearchData_search_items_publication_authorBuilder)?
+              updates]) =>
+      (GAIPoweredSearchData_search_items_publication_authorBuilder()
+            ..update(updates))
+          ._build();
+
+  _$GAIPoweredSearchData_search_items_publication_author._(
+      {required this.G__typename,
+      this.firstName,
+      this.lastName,
+      this.middleName})
+      : super._();
+  @override
+  GAIPoweredSearchData_search_items_publication_author rebuild(
+          void Function(
+                  GAIPoweredSearchData_search_items_publication_authorBuilder)
+              updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GAIPoweredSearchData_search_items_publication_authorBuilder toBuilder() =>
+      GAIPoweredSearchData_search_items_publication_authorBuilder()
+        ..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GAIPoweredSearchData_search_items_publication_author &&
+        G__typename == other.G__typename &&
+        firstName == other.firstName &&
+        lastName == other.lastName &&
+        middleName == other.middleName;
+  }
+
+  @override
+  int get hashCode {
+    var _$hash = 0;
+    _$hash = $jc(_$hash, G__typename.hashCode);
+    _$hash = $jc(_$hash, firstName.hashCode);
+    _$hash = $jc(_$hash, lastName.hashCode);
+    _$hash = $jc(_$hash, middleName.hashCode);
+    _$hash = $jf(_$hash);
+    return _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(
+            r'GAIPoweredSearchData_search_items_publication_author')
+          ..add('G__typename', G__typename)
+          ..add('firstName', firstName)
+          ..add('lastName', lastName)
+          ..add('middleName', middleName))
+        .toString();
+  }
+}
+
+class GAIPoweredSearchData_search_items_publication_authorBuilder
+    implements
+        Builder<GAIPoweredSearchData_search_items_publication_author,
+            GAIPoweredSearchData_search_items_publication_authorBuilder> {
+  _$GAIPoweredSearchData_search_items_publication_author? _$v;
+
+  String? _G__typename;
+  String? get G__typename => _$this._G__typename;
+  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
+
+  String? _firstName;
+  String? get firstName => _$this._firstName;
+  set firstName(String? firstName) => _$this._firstName = firstName;
+
+  String? _lastName;
+  String? get lastName => _$this._lastName;
+  set lastName(String? lastName) => _$this._lastName = lastName;
+
+  String? _middleName;
+  String? get middleName => _$this._middleName;
+  set middleName(String? middleName) => _$this._middleName = middleName;
+
+  GAIPoweredSearchData_search_items_publication_authorBuilder() {
+    GAIPoweredSearchData_search_items_publication_author._initializeBuilder(
+        this);
+  }
+
+  GAIPoweredSearchData_search_items_publication_authorBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _G__typename = $v.G__typename;
+      _firstName = $v.firstName;
+      _lastName = $v.lastName;
+      _middleName = $v.middleName;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GAIPoweredSearchData_search_items_publication_author other) {
+    _$v = other as _$GAIPoweredSearchData_search_items_publication_author;
+  }
+
+  @override
+  void update(
+      void Function(
+              GAIPoweredSearchData_search_items_publication_authorBuilder)?
+          updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  GAIPoweredSearchData_search_items_publication_author build() => _build();
+
+  _$GAIPoweredSearchData_search_items_publication_author _build() {
     final _$result = _$v ??
-        _$GAIPoweredSearchData_search_items_publication._(
-          G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
-              r'GAIPoweredSearchData_search_items_publication', 'G__typename'),
-          id: BuiltValueNullFieldError.checkNotNull(
-              id, r'GAIPoweredSearchData_search_items_publication', 'id'),
-          title: title,
-          code: code,
-          languageCode: languageCode,
-          isAudioBook: isAudioBook,
-          folderId: folderId,
-          permission: permission,
+        _$GAIPoweredSearchData_search_items_publication_author._(
+          G__typename: BuiltValueNullFieldError.checkNotNull(
+              G__typename,
+              r'GAIPoweredSearchData_search_items_publication_author',
+              'G__typename'),
+          firstName: firstName,
+          lastName: lastName,
+          middleName: middleName,
         );
     replace(_$result);
     return _$result;
@@ -1618,6 +1829,10 @@ class _$GAIPoweredSearchData_search_items_paragraph
   @override
   final GAIPoweredSearchData_search_items_paragraph_refCodes? refCodes;
   @override
+  final String chapterId;
+  @override
+  final String paraId;
+  @override
   final String? content;
   @override
   final GAIPoweredSearchData_search_items_paragraph_metadata? metadata;
@@ -1629,7 +1844,12 @@ class _$GAIPoweredSearchData_search_items_paragraph
           ._build();
 
   _$GAIPoweredSearchData_search_items_paragraph._(
-      {required this.G__typename, this.refCodes, this.content, this.metadata})
+      {required this.G__typename,
+      this.refCodes,
+      required this.chapterId,
+      required this.paraId,
+      this.content,
+      this.metadata})
       : super._();
   @override
   GAIPoweredSearchData_search_items_paragraph rebuild(
@@ -1647,6 +1867,8 @@ class _$GAIPoweredSearchData_search_items_paragraph
     return other is GAIPoweredSearchData_search_items_paragraph &&
         G__typename == other.G__typename &&
         refCodes == other.refCodes &&
+        chapterId == other.chapterId &&
+        paraId == other.paraId &&
         content == other.content &&
         metadata == other.metadata;
   }
@@ -1656,6 +1878,8 @@ class _$GAIPoweredSearchData_search_items_paragraph
     var _$hash = 0;
     _$hash = $jc(_$hash, G__typename.hashCode);
     _$hash = $jc(_$hash, refCodes.hashCode);
+    _$hash = $jc(_$hash, chapterId.hashCode);
+    _$hash = $jc(_$hash, paraId.hashCode);
     _$hash = $jc(_$hash, content.hashCode);
     _$hash = $jc(_$hash, metadata.hashCode);
     _$hash = $jf(_$hash);
@@ -1668,6 +1892,8 @@ class _$GAIPoweredSearchData_search_items_paragraph
             r'GAIPoweredSearchData_search_items_paragraph')
           ..add('G__typename', G__typename)
           ..add('refCodes', refCodes)
+          ..add('chapterId', chapterId)
+          ..add('paraId', paraId)
           ..add('content', content)
           ..add('metadata', metadata))
         .toString();
@@ -1693,6 +1919,14 @@ class GAIPoweredSearchData_search_items_paragraphBuilder
               refCodes) =>
       _$this._refCodes = refCodes;
 
+  String? _chapterId;
+  String? get chapterId => _$this._chapterId;
+  set chapterId(String? chapterId) => _$this._chapterId = chapterId;
+
+  String? _paraId;
+  String? get paraId => _$this._paraId;
+  set paraId(String? paraId) => _$this._paraId = paraId;
+
   String? _content;
   String? get content => _$this._content;
   set content(String? content) => _$this._content = content;
@@ -1715,6 +1949,8 @@ class GAIPoweredSearchData_search_items_paragraphBuilder
     if ($v != null) {
       _G__typename = $v.G__typename;
       _refCodes = $v.refCodes?.toBuilder();
+      _chapterId = $v.chapterId;
+      _paraId = $v.paraId;
       _content = $v.content;
       _metadata = $v.metadata?.toBuilder();
       _$v = null;
@@ -1745,6 +1981,10 @@ class GAIPoweredSearchData_search_items_paragraphBuilder
             G__typename: BuiltValueNullFieldError.checkNotNull(G__typename,
                 r'GAIPoweredSearchData_search_items_paragraph', 'G__typename'),
             refCodes: _refCodes?.build(),
+            chapterId: BuiltValueNullFieldError.checkNotNull(chapterId,
+                r'GAIPoweredSearchData_search_items_paragraph', 'chapterId'),
+            paraId: BuiltValueNullFieldError.checkNotNull(paraId,
+                r'GAIPoweredSearchData_search_items_paragraph', 'paraId'),
             content: content,
             metadata: _metadata?.build(),
           );
@@ -1896,9 +2136,6 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadata
   @override
   final GAIPoweredSearchData_search_items_paragraph_metadata_bibleReference?
       bibleReference;
-  @override
-  final GAIPoweredSearchData_search_items_paragraph_metadata_manuscript?
-      manuscript;
 
   factory _$GAIPoweredSearchData_search_items_paragraph_metadata(
           [void Function(
@@ -1909,11 +2146,7 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadata
           ._build();
 
   _$GAIPoweredSearchData_search_items_paragraph_metadata._(
-      {required this.G__typename,
-      this.date,
-      this.paraId,
-      this.bibleReference,
-      this.manuscript})
+      {required this.G__typename, this.date, this.paraId, this.bibleReference})
       : super._();
   @override
   GAIPoweredSearchData_search_items_paragraph_metadata rebuild(
@@ -1934,8 +2167,7 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadata
         G__typename == other.G__typename &&
         date == other.date &&
         paraId == other.paraId &&
-        bibleReference == other.bibleReference &&
-        manuscript == other.manuscript;
+        bibleReference == other.bibleReference;
   }
 
   @override
@@ -1945,7 +2177,6 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadata
     _$hash = $jc(_$hash, date.hashCode);
     _$hash = $jc(_$hash, paraId.hashCode);
     _$hash = $jc(_$hash, bibleReference.hashCode);
-    _$hash = $jc(_$hash, manuscript.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -1957,8 +2188,7 @@ class _$GAIPoweredSearchData_search_items_paragraph_metadata
           ..add('G__typename', G__typename)
           ..add('date', date)
           ..add('paraId', paraId)
-          ..add('bibleReference', bibleReference)
-          ..add('manuscript', manuscript))
+          ..add('bibleReference', bibleReference))
         .toString();
   }
 }
@@ -1991,16 +2221,6 @@ class GAIPoweredSearchData_search_items_paragraph_metadataBuilder
               bibleReference) =>
       _$this._bibleReference = bibleReference;
 
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder?
-      _manuscript;
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder
-      get manuscript => _$this._manuscript ??=
-          GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder();
-  set manuscript(
-          GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder?
-              manuscript) =>
-      _$this._manuscript = manuscript;
-
   GAIPoweredSearchData_search_items_paragraph_metadataBuilder() {
     GAIPoweredSearchData_search_items_paragraph_metadata._initializeBuilder(
         this);
@@ -2013,7 +2233,6 @@ class GAIPoweredSearchData_search_items_paragraph_metadataBuilder
       _date = $v.date?.toBuilder();
       _paraId = $v.paraId;
       _bibleReference = $v.bibleReference?.toBuilder();
-      _manuscript = $v.manuscript?.toBuilder();
       _$v = null;
     }
     return this;
@@ -2047,7 +2266,6 @@ class GAIPoweredSearchData_search_items_paragraph_metadataBuilder
             date: _date?.build(),
             paraId: paraId,
             bibleReference: _bibleReference?.build(),
-            manuscript: _manuscript?.build(),
           );
     } catch (_) {
       late String _$failedField;
@@ -2057,8 +2275,6 @@ class GAIPoweredSearchData_search_items_paragraph_metadataBuilder
 
         _$failedField = 'bibleReference';
         _bibleReference?.build();
-        _$failedField = 'manuscript';
-        _manuscript?.build();
       } catch (e) {
         throw BuiltValueNestedFieldError(
             r'GAIPoweredSearchData_search_items_paragraph_metadata',
@@ -2231,150 +2447,6 @@ class GAIPoweredSearchData_search_items_paragraph_metadata_bibleReferenceBuilder
       }
       rethrow;
     }
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
-    extends GAIPoweredSearchData_search_items_paragraph_metadata_manuscript {
-  @override
-  final String G__typename;
-  @override
-  final String? addressee;
-  @override
-  final String? place;
-  @override
-  final String? title;
-
-  factory _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript(
-          [void Function(
-                  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder)?
-              updates]) =>
-      (GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder()
-            ..update(updates))
-          ._build();
-
-  _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript._(
-      {required this.G__typename, this.addressee, this.place, this.title})
-      : super._();
-  @override
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript rebuild(
-          void Function(
-                  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder)
-              updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder
-      toBuilder() =>
-          GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder()
-            ..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other
-            is GAIPoweredSearchData_search_items_paragraph_metadata_manuscript &&
-        G__typename == other.G__typename &&
-        addressee == other.addressee &&
-        place == other.place &&
-        title == other.title;
-  }
-
-  @override
-  int get hashCode {
-    var _$hash = 0;
-    _$hash = $jc(_$hash, G__typename.hashCode);
-    _$hash = $jc(_$hash, addressee.hashCode);
-    _$hash = $jc(_$hash, place.hashCode);
-    _$hash = $jc(_$hash, title.hashCode);
-    _$hash = $jf(_$hash);
-    return _$hash;
-  }
-
-  @override
-  String toString() {
-    return (newBuiltValueToStringHelper(
-            r'GAIPoweredSearchData_search_items_paragraph_metadata_manuscript')
-          ..add('G__typename', G__typename)
-          ..add('addressee', addressee)
-          ..add('place', place)
-          ..add('title', title))
-        .toString();
-  }
-}
-
-class GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder
-    implements
-        Builder<GAIPoweredSearchData_search_items_paragraph_metadata_manuscript,
-            GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder> {
-  _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript? _$v;
-
-  String? _G__typename;
-  String? get G__typename => _$this._G__typename;
-  set G__typename(String? G__typename) => _$this._G__typename = G__typename;
-
-  String? _addressee;
-  String? get addressee => _$this._addressee;
-  set addressee(String? addressee) => _$this._addressee = addressee;
-
-  String? _place;
-  String? get place => _$this._place;
-  set place(String? place) => _$this._place = place;
-
-  String? _title;
-  String? get title => _$this._title;
-  set title(String? title) => _$this._title = title;
-
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder() {
-    GAIPoweredSearchData_search_items_paragraph_metadata_manuscript
-        ._initializeBuilder(this);
-  }
-
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder
-      get _$this {
-    final $v = _$v;
-    if ($v != null) {
-      _G__typename = $v.G__typename;
-      _addressee = $v.addressee;
-      _place = $v.place;
-      _title = $v.title;
-      _$v = null;
-    }
-    return this;
-  }
-
-  @override
-  void replace(
-      GAIPoweredSearchData_search_items_paragraph_metadata_manuscript other) {
-    _$v = other
-        as _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript;
-  }
-
-  @override
-  void update(
-      void Function(
-              GAIPoweredSearchData_search_items_paragraph_metadata_manuscriptBuilder)?
-          updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  GAIPoweredSearchData_search_items_paragraph_metadata_manuscript build() =>
-      _build();
-
-  _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript _build() {
-    final _$result = _$v ??
-        _$GAIPoweredSearchData_search_items_paragraph_metadata_manuscript._(
-          G__typename: BuiltValueNullFieldError.checkNotNull(
-              G__typename,
-              r'GAIPoweredSearchData_search_items_paragraph_metadata_manuscript',
-              'G__typename'),
-          addressee: addressee,
-          place: place,
-          title: title,
-        );
     replace(_$result);
     return _$result;
   }

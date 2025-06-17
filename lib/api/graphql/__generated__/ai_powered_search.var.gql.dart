@@ -24,6 +24,7 @@ abstract class GAIPoweredSearchVars
   String? get language;
   _i1.GEGWQueryTypeEnum? get queryType;
   _i1.GSortOrderEnum? get orderBy;
+  _i1.GSearchInputFilterInput? get filter;
   static Serializer<GAIPoweredSearchVars> get serializer =>
       _$gAIPoweredSearchVarsSerializer;
 
