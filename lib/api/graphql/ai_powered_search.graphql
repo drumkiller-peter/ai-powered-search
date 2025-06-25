@@ -1,7 +1,7 @@
 query AIPoweredSearch(
   $query: String!
   $type: String!
-  $language: String
+  $languages: [String!]
   $queryType: EGWQueryTypeEnum
   $orderBy: SortOrderEnum
   $filter: SearchInputFilterInput
@@ -9,7 +9,7 @@ query AIPoweredSearch(
   search(
     query: $query
     type: $type
-    language: $language
+    languages: $languages
     queryType: $queryType
     orderBy: $orderBy
     filter: $filter

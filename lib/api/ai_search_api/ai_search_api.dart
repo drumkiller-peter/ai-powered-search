@@ -13,7 +13,7 @@ class AiSearchApi {
   Future<AISearchResult?> performAiPoweredSearch({
     required String query,
     required String searchMode,
-    String? languageCode,
+    List<String>? languageCodes,
     required Client client,
     AISearchQueryTypeEnum? queryType,
     AISearchSortOrderEnum? sortOrder,
@@ -24,7 +24,7 @@ class AiSearchApi {
           GAIPoweredSearchReq((builder) async {
             builder.fetchPolicy = FetchPolicy.CacheAndNetwork;
             builder.vars.query = query;
-            builder.vars.language = languageCode;
+            builder.vars.languages.addAll(languageCodes ?? []);
             builder.vars.type = searchMode;
             if (queryType != null) {
               builder.vars.queryType = mapToEGWQueryTypeEnum(queryType);

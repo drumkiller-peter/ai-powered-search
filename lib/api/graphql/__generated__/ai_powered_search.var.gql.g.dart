@@ -31,12 +31,13 @@ class _$GAIPoweredSearchVarsSerializer
       serializers.serialize(object.type, specifiedType: const FullType(String)),
     ];
     Object? value;
-    value = object.language;
+    value = object.languages;
     if (value != null) {
       result
-        ..add('language')
+        ..add('languages')
         ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(String)])));
     }
     value = object.queryType;
     if (value != null) {
@@ -82,9 +83,11 @@ class _$GAIPoweredSearchVarsSerializer
           result.type = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'language':
-          result.language = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+        case 'languages':
+          result.languages.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'queryType':
           result.queryType = serializers.deserialize(value,
@@ -114,7 +117,7 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
   @override
   final String type;
   @override
-  final String? language;
+  final BuiltList<String>? languages;
   @override
   final _i1.GEGWQueryTypeEnum? queryType;
   @override
@@ -129,7 +132,7 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
   _$GAIPoweredSearchVars._(
       {required this.query,
       required this.type,
-      this.language,
+      this.languages,
       this.queryType,
       this.orderBy,
       this.filter})
@@ -149,7 +152,7 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
     return other is GAIPoweredSearchVars &&
         query == other.query &&
         type == other.type &&
-        language == other.language &&
+        languages == other.languages &&
         queryType == other.queryType &&
         orderBy == other.orderBy &&
         filter == other.filter;
@@ -160,7 +163,7 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
     var _$hash = 0;
     _$hash = $jc(_$hash, query.hashCode);
     _$hash = $jc(_$hash, type.hashCode);
-    _$hash = $jc(_$hash, language.hashCode);
+    _$hash = $jc(_$hash, languages.hashCode);
     _$hash = $jc(_$hash, queryType.hashCode);
     _$hash = $jc(_$hash, orderBy.hashCode);
     _$hash = $jc(_$hash, filter.hashCode);
@@ -173,7 +176,7 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
     return (newBuiltValueToStringHelper(r'GAIPoweredSearchVars')
           ..add('query', query)
           ..add('type', type)
-          ..add('language', language)
+          ..add('languages', languages)
           ..add('queryType', queryType)
           ..add('orderBy', orderBy)
           ..add('filter', filter))
@@ -193,9 +196,11 @@ class GAIPoweredSearchVarsBuilder
   String? get type => _$this._type;
   set type(String? type) => _$this._type = type;
 
-  String? _language;
-  String? get language => _$this._language;
-  set language(String? language) => _$this._language = language;
+  ListBuilder<String>? _languages;
+  ListBuilder<String> get languages =>
+      _$this._languages ??= ListBuilder<String>();
+  set languages(ListBuilder<String>? languages) =>
+      _$this._languages = languages;
 
   _i1.GEGWQueryTypeEnum? _queryType;
   _i1.GEGWQueryTypeEnum? get queryType => _$this._queryType;
@@ -219,7 +224,7 @@ class GAIPoweredSearchVarsBuilder
     if ($v != null) {
       _query = $v.query;
       _type = $v.type;
-      _language = $v.language;
+      _languages = $v.languages?.toBuilder();
       _queryType = $v.queryType;
       _orderBy = $v.orderBy;
       _filter = $v.filter?.toBuilder();
@@ -250,7 +255,7 @@ class GAIPoweredSearchVarsBuilder
                 query, r'GAIPoweredSearchVars', 'query'),
             type: BuiltValueNullFieldError.checkNotNull(
                 type, r'GAIPoweredSearchVars', 'type'),
-            language: language,
+            languages: _languages?.build(),
             queryType: queryType,
             orderBy: orderBy,
             filter: _filter?.build(),
@@ -258,6 +263,9 @@ class GAIPoweredSearchVarsBuilder
     } catch (_) {
       late String _$failedField;
       try {
+        _$failedField = 'languages';
+        _languages?.build();
+
         _$failedField = 'filter';
         _filter?.build();
       } catch (e) {

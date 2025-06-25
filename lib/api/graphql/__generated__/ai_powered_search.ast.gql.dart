@@ -27,9 +27,12 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
       directives: [],
     ),
     _i1.VariableDefinitionNode(
-      variable: _i1.VariableNode(name: _i1.NameNode(value: 'language')),
-      type: _i1.NamedTypeNode(
-        name: _i1.NameNode(value: 'String'),
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'languages')),
+      type: _i1.ListTypeNode(
+        type: _i1.NamedTypeNode(
+          name: _i1.NameNode(value: 'String'),
+          isNonNull: true,
+        ),
         isNonNull: false,
       ),
       defaultValue: _i1.DefaultValueNode(value: null),
@@ -78,8 +81,8 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
           value: _i1.VariableNode(name: _i1.NameNode(value: 'type')),
         ),
         _i1.ArgumentNode(
-          name: _i1.NameNode(value: 'language'),
-          value: _i1.VariableNode(name: _i1.NameNode(value: 'language')),
+          name: _i1.NameNode(value: 'languages'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'languages')),
         ),
         _i1.ArgumentNode(
           name: _i1.NameNode(value: 'queryType'),

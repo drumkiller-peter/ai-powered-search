@@ -31,7 +31,6 @@ Serializers _$serializers = (Serializers().toBuilder()
       ..add(GDateTimeOperationFilterInput.serializer)
       ..add(GDeleteQueryInput.serializer)
       ..add(GEGWQueryTypeEnum.serializer)
-      ..add(GFacetTypeEnum.serializer)
       ..add(GFloatOperationFilterInput.serializer)
       ..add(GGenerateReplyToUserMessageInput.serializer)
       ..add(GIntOperationFilterInput.serializer)
@@ -162,6 +161,9 @@ Serializers _$serializers = (Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(GWemlPublicationPermission)]),
           () => ListBuilder<GWemlPublicationPermission>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(String)]),
           () => ListBuilder<String>())

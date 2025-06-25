@@ -53,17 +53,17 @@ type SearchResults {
   languageFacets: [KeyValuePairOfStringAndInt32!]
   items: [SearchHitDto!]!
   info: SearchSegmentInfo
-  facet(
-    language: String!
-    type: FacetTypeEnum!
-    filter: SearchInputFilterInput
-  ): [FacetDto]
+
+  """
+  Combined publication facets aggregated across all languages.
+  """
+  combinedPublicationFacets: [PublicationFacet]
 }
 
 union FacetDto = PublicationFacet | FolderFacet
 
 type PublicationFacet {
-  publication: Publication!
+  publication: Publication
 
   """
   Number of matches in this publication
@@ -77,7 +77,7 @@ type FolderFacet {
 }
 
 type Publication {
-  id: Int!
+  id: Int
   type: String
   languageCode: String
   language: Language
@@ -142,12 +142,6 @@ input SearchInputFilterInput {
 }
 
 scalar Any
-
-enum FacetTypeEnum {
-  PUBLICATION
-  FOLDER
-  TOPIC
-}
 
 type Folder {
   id: Int!
@@ -340,11 +334,7 @@ type Query {
     Search Type
     """
     type: String
-
-    """
-    Language code
-    """
-    language: String
+    languages: [String!]
 
     """
     Filter Queries

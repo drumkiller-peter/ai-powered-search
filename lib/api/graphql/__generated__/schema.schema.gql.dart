@@ -54,23 +54,6 @@ abstract class GAny implements Built<GAny, GAnyBuilder> {
       (Object serialized) => GAny((serialized as String?)));
 }
 
-class GFacetTypeEnum extends EnumClass {
-  const GFacetTypeEnum._(String name) : super(name);
-
-  static const GFacetTypeEnum PUBLICATION = _$gFacetTypeEnumPUBLICATION;
-
-  static const GFacetTypeEnum FOLDER = _$gFacetTypeEnumFOLDER;
-
-  static const GFacetTypeEnum TOPIC = _$gFacetTypeEnumTOPIC;
-
-  static Serializer<GFacetTypeEnum> get serializer =>
-      _$gFacetTypeEnumSerializer;
-
-  static BuiltSet<GFacetTypeEnum> get values => _$gFacetTypeEnumValues;
-
-  static GFacetTypeEnum valueOf(String name) => _$gFacetTypeEnumValueOf(name);
-}
-
 abstract class GDateTime implements Built<GDateTime, GDateTimeBuilder> {
   GDateTime._();
 

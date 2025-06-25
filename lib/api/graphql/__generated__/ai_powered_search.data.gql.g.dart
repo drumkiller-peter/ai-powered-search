@@ -345,10 +345,14 @@ class _$GAIPoweredSearchData_search_items_publicationSerializer
       '__typename',
       serializers.serialize(object.G__typename,
           specifiedType: const FullType(String)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(int)),
     ];
     Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.title;
     if (value != null) {
       result
@@ -425,7 +429,7 @@ class _$GAIPoweredSearchData_search_items_publicationSerializer
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'title':
           result.title = serializers.deserialize(value,
@@ -1458,7 +1462,7 @@ class _$GAIPoweredSearchData_search_items_publication
   @override
   final String G__typename;
   @override
-  final int id;
+  final int? id;
   @override
   final String? title;
   @override
@@ -1484,7 +1488,7 @@ class _$GAIPoweredSearchData_search_items_publication
 
   _$GAIPoweredSearchData_search_items_publication._(
       {required this.G__typename,
-      required this.id,
+      this.id,
       this.title,
       this.code,
       this.languageCode,
@@ -1652,8 +1656,7 @@ class GAIPoweredSearchData_search_items_publicationBuilder
                 G__typename,
                 r'GAIPoweredSearchData_search_items_publication',
                 'G__typename'),
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'GAIPoweredSearchData_search_items_publication', 'id'),
+            id: id,
             title: title,
             code: code,
             languageCode: languageCode,

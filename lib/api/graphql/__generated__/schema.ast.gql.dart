@@ -279,40 +279,12 @@ const SearchResults = _i1.ObjectTypeDefinitionNode(
       ),
     ),
     _i1.FieldDefinitionNode(
-      name: _i1.NameNode(value: 'facet'),
+      name: _i1.NameNode(value: 'combinedPublicationFacets'),
       directives: [],
-      args: [
-        _i1.InputValueDefinitionNode(
-          name: _i1.NameNode(value: 'language'),
-          directives: [],
-          type: _i1.NamedTypeNode(
-            name: _i1.NameNode(value: 'String'),
-            isNonNull: true,
-          ),
-          defaultValue: null,
-        ),
-        _i1.InputValueDefinitionNode(
-          name: _i1.NameNode(value: 'type'),
-          directives: [],
-          type: _i1.NamedTypeNode(
-            name: _i1.NameNode(value: 'FacetTypeEnum'),
-            isNonNull: true,
-          ),
-          defaultValue: null,
-        ),
-        _i1.InputValueDefinitionNode(
-          name: _i1.NameNode(value: 'filter'),
-          directives: [],
-          type: _i1.NamedTypeNode(
-            name: _i1.NameNode(value: 'SearchInputFilterInput'),
-            isNonNull: false,
-          ),
-          defaultValue: null,
-        ),
-      ],
+      args: [],
       type: _i1.ListTypeNode(
         type: _i1.NamedTypeNode(
-          name: _i1.NameNode(value: 'FacetDto'),
+          name: _i1.NameNode(value: 'PublicationFacet'),
           isNonNull: false,
         ),
         isNonNull: false,
@@ -345,7 +317,7 @@ const PublicationFacet = _i1.ObjectTypeDefinitionNode(
       args: [],
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'Publication'),
-        isNonNull: true,
+        isNonNull: false,
       ),
     ),
     _i1.FieldDefinitionNode(
@@ -395,7 +367,7 @@ const Publication = _i1.ObjectTypeDefinitionNode(
       args: [],
       type: _i1.NamedTypeNode(
         name: _i1.NameNode(value: 'Int'),
-        isNonNull: true,
+        isNonNull: false,
       ),
     ),
     _i1.FieldDefinitionNode(
@@ -689,24 +661,6 @@ const SearchInputFilterInput = _i1.InputObjectTypeDefinitionNode(
 const Any = _i1.ScalarTypeDefinitionNode(
   name: _i1.NameNode(value: 'Any'),
   directives: [],
-);
-const FacetTypeEnum = _i1.EnumTypeDefinitionNode(
-  name: _i1.NameNode(value: 'FacetTypeEnum'),
-  directives: [],
-  values: [
-    _i1.EnumValueDefinitionNode(
-      name: _i1.NameNode(value: 'PUBLICATION'),
-      directives: [],
-    ),
-    _i1.EnumValueDefinitionNode(
-      name: _i1.NameNode(value: 'FOLDER'),
-      directives: [],
-    ),
-    _i1.EnumValueDefinitionNode(
-      name: _i1.NameNode(value: 'TOPIC'),
-      directives: [],
-    ),
-  ],
 );
 const Folder = _i1.ObjectTypeDefinitionNode(
   name: _i1.NameNode(value: 'Folder'),
@@ -1370,10 +1324,13 @@ const Query = _i1.ObjectTypeDefinitionNode(
           defaultValue: null,
         ),
         _i1.InputValueDefinitionNode(
-          name: _i1.NameNode(value: 'language'),
+          name: _i1.NameNode(value: 'languages'),
           directives: [],
-          type: _i1.NamedTypeNode(
-            name: _i1.NameNode(value: 'String'),
+          type: _i1.ListTypeNode(
+            type: _i1.NamedTypeNode(
+              name: _i1.NameNode(value: 'String'),
+              isNonNull: true,
+            ),
             isNonNull: false,
           ),
           defaultValue: null,
@@ -4785,7 +4742,6 @@ const document = _i1.DocumentNode(definitions: [
   Publication,
   SearchInputFilterInput,
   Any,
-  FacetTypeEnum,
   Folder,
   Language,
   Author,

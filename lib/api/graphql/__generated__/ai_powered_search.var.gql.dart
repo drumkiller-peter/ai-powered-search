@@ -6,6 +6,7 @@ import 'package:ai_powered_search/api/graphql/__generated__/schema.schema.gql.da
     as _i1;
 import 'package:ai_powered_search/api/graphql/__generated__/serializers.gql.dart'
     as _i2;
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -21,7 +22,7 @@ abstract class GAIPoweredSearchVars
 
   String get query;
   String get type;
-  String? get language;
+  BuiltList<String>? get languages;
   _i1.GEGWQueryTypeEnum? get queryType;
   _i1.GSortOrderEnum? get orderBy;
   _i1.GSearchInputFilterInput? get filter;

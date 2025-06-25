@@ -159,7 +159,7 @@ abstract class GAIPoweredSearchData_search_items_publication
 
   @BuiltValueField(wireName: '__typename')
   String get G__typename;
-  int get id;
+  int? get id;
   String? get title;
   String? get code;
   String? get languageCode;

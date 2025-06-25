@@ -6,31 +6,6 @@ part of 'schema.schema.gql.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const GFacetTypeEnum _$gFacetTypeEnumPUBLICATION =
-    const GFacetTypeEnum._('PUBLICATION');
-const GFacetTypeEnum _$gFacetTypeEnumFOLDER = const GFacetTypeEnum._('FOLDER');
-const GFacetTypeEnum _$gFacetTypeEnumTOPIC = const GFacetTypeEnum._('TOPIC');
-
-GFacetTypeEnum _$gFacetTypeEnumValueOf(String name) {
-  switch (name) {
-    case 'PUBLICATION':
-      return _$gFacetTypeEnumPUBLICATION;
-    case 'FOLDER':
-      return _$gFacetTypeEnumFOLDER;
-    case 'TOPIC':
-      return _$gFacetTypeEnumTOPIC;
-    default:
-      throw ArgumentError(name);
-  }
-}
-
-final BuiltSet<GFacetTypeEnum> _$gFacetTypeEnumValues =
-    BuiltSet<GFacetTypeEnum>(const <GFacetTypeEnum>[
-  _$gFacetTypeEnumPUBLICATION,
-  _$gFacetTypeEnumFOLDER,
-  _$gFacetTypeEnumTOPIC,
-]);
-
 const GApplyPolicy _$gApplyPolicyBEFORE_RESOLVER =
     const GApplyPolicy._('BEFORE_RESOLVER');
 const GApplyPolicy _$gApplyPolicyAFTER_RESOLVER =
@@ -461,8 +436,6 @@ final BuiltSet<GLtMsTypeEnum> _$gLtMsTypeEnumValues =
 
 Serializer<GSearchInputFilterInput> _$gSearchInputFilterInputSerializer =
     _$GSearchInputFilterInputSerializer();
-Serializer<GFacetTypeEnum> _$gFacetTypeEnumSerializer =
-    _$GFacetTypeEnumSerializer();
 Serializer<GIntersectionFilterOfInt32Input>
     _$gIntersectionFilterOfInt32InputSerializer =
     _$GIntersectionFilterOfInt32InputSerializer();
@@ -689,24 +662,6 @@ class _$GSearchInputFilterInputSerializer
 
     return result.build();
   }
-}
-
-class _$GFacetTypeEnumSerializer
-    implements PrimitiveSerializer<GFacetTypeEnum> {
-  @override
-  final Iterable<Type> types = const <Type>[GFacetTypeEnum];
-  @override
-  final String wireName = 'GFacetTypeEnum';
-
-  @override
-  Object serialize(Serializers serializers, GFacetTypeEnum object,
-          {FullType specifiedType = FullType.unspecified}) =>
-      object.name;
-
-  @override
-  GFacetTypeEnum deserialize(Serializers serializers, Object serialized,
-          {FullType specifiedType = FullType.unspecified}) =>
-      GFacetTypeEnum.valueOf(serialized as String);
 }
 
 class _$GIntersectionFilterOfInt32InputSerializer
