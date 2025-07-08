@@ -13,11 +13,11 @@ enum AISearchQueryTypeEnum { exact, preferExact, excludeExact, stemmed }
 /// Weighted relevancy => weightedRelevancy
 enum AISearchSortOrderEnum {
   sequence,
-  sequenceDescending,
+  weightedRelevancy,
+  relevancy,
   date,
   dateDescending,
-  relevancy,
-  weightedRelevancy,
+  // sequenceDescending,
 }
 
 // TODO: Remove this, if not needed.

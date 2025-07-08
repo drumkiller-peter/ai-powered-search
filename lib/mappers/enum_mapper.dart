@@ -18,8 +18,6 @@ GSortOrderEnum mapToEGWSortOrderEnum(AISearchSortOrderEnum type) {
   switch (type) {
     case AISearchSortOrderEnum.sequence:
       return GSortOrderEnum.SEQUENCE;
-    case AISearchSortOrderEnum.sequenceDescending:
-      return GSortOrderEnum.SEQUENCE_DESCENDING;
     case AISearchSortOrderEnum.date:
       return GSortOrderEnum.DATE;
     case AISearchSortOrderEnum.dateDescending:
