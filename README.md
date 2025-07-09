@@ -23,16 +23,25 @@ class AiPoweredSearchRepository implements IAiPoweredSearchRepository {
   final _aiPoweredSearchClient =
       getIt.get<Client>(instanceName: aiPoweredSearch);
   @override
-  Future<AISearchResult?> search(
-      {required String query, required String searchMode}) async {
-    final languageCode = await getIt.get<LanguageCodeCache>().getLanguageCode();
+  Future<AISearchResult?> search({
+    required String query,
+    required String searchMode,
+    required List<String> languageCodes,
+    AiPoweredSearchFilter? filter,
+    AISearchSortOrderEnum? sortOrder,
+    int? limit,
+    int? offset,
+  }) async {
     final res = await getIt.get<AiSearchApi>().performAiPoweredSearch(
           query: query,
           searchMode: searchMode,
           client: _aiPoweredSearchClient,
-          languageCode: languageCode,
+          languageCodes: languageCodes,
           queryType: AISearchQueryTypeEnum.exact,
-          sortOrder: AISearchSortOrderEnum.sequence,
+          sortOrder: sortOrder,
+          filter: filter,
+          limit: limit,
+          offset: offset,
         );
     return res;
   }

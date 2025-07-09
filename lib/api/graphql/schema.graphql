@@ -346,6 +346,16 @@ type Query {
     manuscriptsFilter: SearchInputManuscriptsFilterInput
     paginationFilter: SearchInputPaginationFilterInput
     queryType: EGWQueryTypeEnum
+
+    """
+    Limit of results
+    """
+    limit: Int
+
+    """
+    Offset of results
+    """
+    offset: Int
   ): SearchResults!
 }
 

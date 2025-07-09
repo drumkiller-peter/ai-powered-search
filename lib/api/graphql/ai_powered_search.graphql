@@ -5,6 +5,8 @@ query AIPoweredSearch(
   $queryType: EGWQueryTypeEnum
   $orderBy: SortOrderEnum
   $filter: SearchInputFilterInput
+  $limit: Int
+  $offset: Int
 ) {
   search(
     query: $query
@@ -13,6 +15,8 @@ query AIPoweredSearch(
     queryType: $queryType
     orderBy: $orderBy
     filter: $filter
+    limit: $limit
+    offset: $offset
   ) {
     totalCount
     info {

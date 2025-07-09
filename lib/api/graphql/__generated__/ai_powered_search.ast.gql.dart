@@ -65,6 +65,24 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
       defaultValue: _i1.DefaultValueNode(value: null),
       directives: [],
     ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'limit')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'Int'),
+        isNonNull: false,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
+    _i1.VariableDefinitionNode(
+      variable: _i1.VariableNode(name: _i1.NameNode(value: 'offset')),
+      type: _i1.NamedTypeNode(
+        name: _i1.NameNode(value: 'Int'),
+        isNonNull: false,
+      ),
+      defaultValue: _i1.DefaultValueNode(value: null),
+      directives: [],
+    ),
   ],
   directives: [],
   selectionSet: _i1.SelectionSetNode(selections: [
@@ -95,6 +113,14 @@ const AIPoweredSearch = _i1.OperationDefinitionNode(
         _i1.ArgumentNode(
           name: _i1.NameNode(value: 'filter'),
           value: _i1.VariableNode(name: _i1.NameNode(value: 'filter')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'limit'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'limit')),
+        ),
+        _i1.ArgumentNode(
+          name: _i1.NameNode(value: 'offset'),
+          value: _i1.VariableNode(name: _i1.NameNode(value: 'offset')),
         ),
       ],
       directives: [],

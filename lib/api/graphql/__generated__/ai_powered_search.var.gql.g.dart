@@ -60,6 +60,18 @@ class _$GAIPoweredSearchVarsSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(_i1.GSearchInputFilterInput)));
     }
+    value = object.limit;
+    if (value != null) {
+      result
+        ..add('limit')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.offset;
+    if (value != null) {
+      result
+        ..add('offset')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -104,6 +116,14 @@ class _$GAIPoweredSearchVarsSerializer
                   specifiedType: const FullType(_i1.GSearchInputFilterInput))!
               as _i1.GSearchInputFilterInput);
           break;
+        case 'limit':
+          result.limit = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'offset':
+          result.offset = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
       }
     }
 
@@ -124,6 +144,10 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
   final _i1.GSortOrderEnum? orderBy;
   @override
   final _i1.GSearchInputFilterInput? filter;
+  @override
+  final int? limit;
+  @override
+  final int? offset;
 
   factory _$GAIPoweredSearchVars(
           [void Function(GAIPoweredSearchVarsBuilder)? updates]) =>
@@ -135,7 +159,9 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
       this.languages,
       this.queryType,
       this.orderBy,
-      this.filter})
+      this.filter,
+      this.limit,
+      this.offset})
       : super._();
   @override
   GAIPoweredSearchVars rebuild(
@@ -155,7 +181,9 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
         languages == other.languages &&
         queryType == other.queryType &&
         orderBy == other.orderBy &&
-        filter == other.filter;
+        filter == other.filter &&
+        limit == other.limit &&
+        offset == other.offset;
   }
 
   @override
@@ -167,6 +195,8 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
     _$hash = $jc(_$hash, queryType.hashCode);
     _$hash = $jc(_$hash, orderBy.hashCode);
     _$hash = $jc(_$hash, filter.hashCode);
+    _$hash = $jc(_$hash, limit.hashCode);
+    _$hash = $jc(_$hash, offset.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -179,7 +209,9 @@ class _$GAIPoweredSearchVars extends GAIPoweredSearchVars {
           ..add('languages', languages)
           ..add('queryType', queryType)
           ..add('orderBy', orderBy)
-          ..add('filter', filter))
+          ..add('filter', filter)
+          ..add('limit', limit)
+          ..add('offset', offset))
         .toString();
   }
 }
@@ -217,6 +249,14 @@ class GAIPoweredSearchVarsBuilder
   set filter(_i1.GSearchInputFilterInputBuilder? filter) =>
       _$this._filter = filter;
 
+  int? _limit;
+  int? get limit => _$this._limit;
+  set limit(int? limit) => _$this._limit = limit;
+
+  int? _offset;
+  int? get offset => _$this._offset;
+  set offset(int? offset) => _$this._offset = offset;
+
   GAIPoweredSearchVarsBuilder();
 
   GAIPoweredSearchVarsBuilder get _$this {
@@ -228,6 +268,8 @@ class GAIPoweredSearchVarsBuilder
       _queryType = $v.queryType;
       _orderBy = $v.orderBy;
       _filter = $v.filter?.toBuilder();
+      _limit = $v.limit;
+      _offset = $v.offset;
       _$v = null;
     }
     return this;
@@ -259,6 +301,8 @@ class GAIPoweredSearchVarsBuilder
             queryType: queryType,
             orderBy: orderBy,
             filter: _filter?.build(),
+            limit: limit,
+            offset: offset,
           );
     } catch (_) {
       late String _$failedField;

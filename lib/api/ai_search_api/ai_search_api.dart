@@ -18,6 +18,8 @@ class AiSearchApi {
     AISearchQueryTypeEnum? queryType,
     AISearchSortOrderEnum? sortOrder,
     AiPoweredSearchFilter? filter,
+    int? limit,
+    int? offset,
   }) async {
     var res = await client
         .request(
@@ -26,6 +28,8 @@ class AiSearchApi {
             builder.vars.query = query;
             builder.vars.languages.addAll(languageCodes ?? []);
             builder.vars.type = searchMode;
+            builder.vars.limit = limit;
+            builder.vars.offset = offset;
             if (queryType != null) {
               builder.vars.queryType = mapToEGWQueryTypeEnum(queryType);
             }
@@ -86,8 +90,10 @@ class AiSearchApi {
     return AISearchResult(
       totalCount: searchData.totalCount ?? 0,
       info: PageInfoModel(
-        hasNextPage: searchData.info?.hasNextPage,
-        hasPreviousPage: searchData.info?.hasPreviousPage,
+        hasNextPage: limit != null && offset != null
+            ? (offset + limit) < (searchData.totalCount ?? 0)
+            : false,
+        hasPreviousPage: offset != null ? offset > 0 : false,
       ),
       items: searchData.items
           .map(
